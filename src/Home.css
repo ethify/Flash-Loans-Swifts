@@ -7,10 +7,10 @@
   margin-top: 5%;
   align-items: center;
 }
-.Card {
+/* .Card {
   width: 24%;
   display: inline-block;
-}
+} */
 .CardDescription {
   font-size: large;
 }
@@ -34,4 +34,8 @@
 }
 .UpNumber {
   margin-right: 3%;
+}
+
+.main-container {
+  margin-top: 5rem;
 }

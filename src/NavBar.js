@@ -7,17 +7,13 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  FormInput,
   Collapse,
+  Button
 } from "shards-react";
+import makeBlockie from "ethereum-blockies-base64";
+
 import "./NavBar.css";
+import { getAccount, getWeb3Instance, defaultAddress } from './services'
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -25,11 +21,27 @@ export default class NavBar extends React.Component {
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.getWeb3 = this.getWeb3.bind(this);
 
     this.state = {
       dropdownOpen: false,
       collapseOpen: false,
+      web3: null,
+      userAddress: null,
+      shortUserAddress: null
     };
+  }
+
+  async componentDidMount() {
+    await getWeb3Instance
+  }
+
+  async getWeb3() {
+    await getAccount()
+    const userAddress = await defaultAddress()
+
+    const shortUserAddress = userAddress.substring(0,7) + '........' + userAddress.substring(userAddress.length -7, userAddress.length)
+    this.setState({ userAddress: userAddress, shortUserAddress:shortUserAddress })
   }
 
   toggleDropdown() {
@@ -53,7 +65,7 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <HashRouter>
-        <Navbar type="dark" theme="info" expand="md">
+        <Navbar className="navbar" expand="md">
           <NavbarBrand className="Link" href="#" to="/">
             FZap
           </NavbarBrand>
@@ -62,14 +74,41 @@ export default class NavBar extends React.Component {
           <Collapse open={this.state.collapseOpen} navbar>
             <Nav navbar className="Nav">
               <NavItem className="NavItem">
-                <Link className="Link" href="#" to="/">
-                  Flash Zap
-                </Link>
+                <Button outline pill theme="info">
+                  <Link className="Link" to="/">
+                    Flash Zap
+                  </Link>
+                </Button>
               </NavItem>
               <NavItem className="NavItem1">
-                <Link className="Link" href="#" to="/new-zap">
-                  Add New
-                </Link>
+                <Button outline pill theme="info">
+                  <Link className="Link" to="/new-zap">
+                    Add New
+                  </Link>
+                </Button>
+              </NavItem>
+            </Nav>
+
+            <Nav navbar className="Nav">
+              <NavItem className="NavItem">
+                <Button outline pill theme="info" onClick={this.getWeb3}>
+                  {
+                    this.state.userAddress ? (
+                      <div className="address-container">
+                        <img
+                          src={makeBlockie(this.state.userAddress)}
+                          alt="address blockie"
+                          className="address-blockie"
+                          width="15"
+                        />
+                        <span className="short-address">{this.state.shortUserAddress}</span>
+                      </div>
+
+                    ) : (<div>
+                      No Wallet Connected
+                    </div>)
+                  }
+                </Button>
               </NavItem>
             </Nav>
           </Collapse>

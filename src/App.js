@@ -24,7 +24,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/new-zap" component={NewZap} />
-            <Route path="/fzap-name" component={FzapName} />
+            <Route path="/swift/:swiftUUID" component={FzapName} />
           </Switch>
         </HashRouter>
       </div>

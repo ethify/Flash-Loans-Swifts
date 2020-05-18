@@ -10,3 +10,11 @@
 .Link {
   color: #000;
 }
+
+.address-blockie {
+  float: left;
+}
+
+.short-address {
+  float: right;
+}

@@ -15,7 +15,7 @@ import GridLoader from "react-spinners/GridLoader";
 
 import "./Home.css";
 
-import { getSwifts, getSpace } from "./services";
+import { getSwifts, getSpace, setSwifts, defaultAddress, upVoteSwift, downVoteSwift } from "./services";
 
 
 export default class Home extends React.Component {
@@ -26,6 +26,9 @@ export default class Home extends React.Component {
     this.state = {
       swifts: null,
     };
+
+    this.downVoteSwift = this.downVoteSwift.bind(this)
+    this.upVoteSwift = this.upVoteSwift.bind(this)
   }
 
   async componentDidMount() {
@@ -42,6 +45,16 @@ export default class Home extends React.Component {
     }
   }
 
+  async downVoteSwift(e) {
+    const newSwifts = await downVoteSwift(e.target.value)
+    this.setState({swift: newSwifts})
+  }
+
+  async upVoteSwift(e) {
+    const newSwifts = await upVoteSwift(e.target.value)
+    this.setState({swift: newSwifts})
+  }
+
   render() {
     return (
       <HashRouter>
@@ -53,53 +66,53 @@ export default class Home extends React.Component {
             <center>
               {" "}
               <div className="Cards">
-                  {
-                    this.state.swifts ? (
-                      this.state.swifts.map((swift) =>
-                        <div>
-                            <Card className="Card">
-                              <CardHeader className="CardHeader">FZap</CardHeader>
-                              <CardBody>
-                                <CardTitle className="CardTitle">
-                                  {swift.name}
-                                </CardTitle>
-                                <p className="CardDescription">
-                                  {swift.description}
-                                </p>
-                                <CardTitle clasName="CardTitle2">
-                                  DevAddress
+                {
+                  this.state.swifts ? (
+                    this.state.swifts.map((swift) =>
+                      <div>
+                        <Card className="Card">
+                          <CardHeader className="CardHeader">FZap</CardHeader>
+                          <CardBody>
+                            <CardTitle className="CardTitle">
+                              {swift.name}
+                            </CardTitle>
+                            <p className="CardDescription">
+                              {swift.description}
+                            </p>
+                            <CardTitle className="CardTitle2">
+                              DevAddress
                                   </CardTitle>
-                                <div>
-                                  <div className="Votes1">
-                                    <span clasName="UpVote">&uarr;</span>
-                                  </div>
-                                  <span clasName="UpNumber">4</span>
+                            <div>
+                              <div className="Votes1">
+                                <Button value={swift.id} className="UpVote" onClick={this.upVoteSwift}>&uarr;</Button>
+                              </div>
+                  <span className="UpNumber">{swift.upVotes}</span>
 
-                                  <div className="Votes2">
-                                    <span clasName="DownVote">&darr;</span>
-                                  </div>
-                                  <span clasName="DownNumber">1</span>
-                                </div>
-                                <br />
-                                <Button clasName="UseButton" name={swift.id} onClick={(e) => {
-                                  this.props.history.push("/swift/" + e.target.name)
-                                }}>
-                                  Use This
+                              <div className="Votes2">
+                                <Button value={swift.id} className="DownVote" onClick={this.downVoteSwift}>&darr;</Button>
+                              </div>
+                              <span className="DownNumber">{swift.downVotes}</span>
+                            </div>
+                            <br />
+                            <Button className="UseButton" name={swift.id} onClick={(e) => {
+                              this.props.history.push("/swift/" + e.target.name)
+                            }}>
+                              Use This
                                 </Button>
-                              </CardBody>
-                            </Card>
-                        </div>
-                      )
-                    ) : (
-                        <Col>
-                          <center> <GridLoader
-                            size={10}
-                            color={"#9c24c0"}
-                            loading={this.state.buyingPoolToken}
-                          /></center>
-                        </Col>
-                      )
-                  }
+                          </CardBody>
+                        </Card>
+                      </div>
+                    )
+                  ) : (
+                      <Col>
+                        <center> <GridLoader
+                          size={10}
+                          color={"#9c24c0"}
+                          loading={this.state.buyingPoolToken}
+                        /></center>
+                      </Col>
+                    )
+                }
               </div>
             </center>
           </Container>

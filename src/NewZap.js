@@ -12,7 +12,7 @@ import {
   FormSelect,
   Button,
 } from "shards-react";
-import { getSpace, setSwifts } from './services'
+import { getSpace, setSwifts, upVoteSwift } from './services'
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -38,7 +38,10 @@ export default class NewZap extends React.Component {
       id: swiftUUID,
       name: this.state.name,
       description: this.state.description,
-      parameters: this.state.parameters
+      parameters: this.state.parameters,
+      voters: [],
+      upVotes: 0,
+      downVotes: 0
     }
 
     await setSwifts(swift)

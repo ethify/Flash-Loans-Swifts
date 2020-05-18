@@ -7,10 +7,10 @@
   margin-top: 5%;
   align-items: center;
 }
-/* .Card {
+.Card {
   width: 24%;
   display: inline-block;
-} */
+}
 .CardDescription {
   font-size: large;
 }

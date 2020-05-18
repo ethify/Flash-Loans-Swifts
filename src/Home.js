@@ -53,15 +53,12 @@ export default class Home extends React.Component {
             <center>
               {" "}
               <div className="Cards">
-                <Row>
                   {
                     this.state.swifts ? (
                       this.state.swifts.map((swift) =>
                         <div>
-                          <Col>
                             <Card className="Card">
                               <CardHeader className="CardHeader">FZap</CardHeader>
-
                               <CardBody>
                                 <CardTitle className="CardTitle">
                                   {swift.name}
@@ -91,7 +88,6 @@ export default class Home extends React.Component {
                                 </Button>
                               </CardBody>
                             </Card>
-                          </Col>
                         </div>
                       )
                     ) : (
@@ -104,7 +100,6 @@ export default class Home extends React.Component {
                         </Col>
                       )
                   }
-                </Row>
               </div>
             </center>
           </Container>

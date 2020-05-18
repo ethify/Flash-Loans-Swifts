@@ -1,5 +1,5 @@
 .Heading {
-  margin-top: 4%;
+  margin-top: 8%;
   text-align: center;
   margin-bottom: 5%;
 }
@@ -7,10 +7,12 @@
   margin-top: 5%;
   align-items: center;
 }
-/* .Card {
-  width: 24%;
-  display: inline-block;
-} */
+.Card {
+  width: 23rem;
+  height: 23rem;
+  margin-bottom: 2rem;
+  margin-left: 3%;
+}
 .CardDescription {
   font-size: large;
 }

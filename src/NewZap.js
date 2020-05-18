@@ -12,37 +12,36 @@ import {
   FormSelect,
   Button,
 } from "shards-react";
-import { getSpace, setSwifts } from './services'
+import { getSpace, setSwifts } from "./services";
 
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export default class NewZap extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
-      name: '',
-      description: '',
-      parameters: []
-    }
+      name: "",
+      description: "",
+      parameters: [],
+    };
     this.addSwift = this.addSwift.bind(this);
   }
 
   addSwift = async () => {
-    const space = await getSpace()
+    const space = await getSpace();
 
-    const swiftUUID = uuidv4()
+    const swiftUUID = uuidv4();
 
     const swift = {
       id: swiftUUID,
       name: this.state.name,
       description: this.state.description,
-      parameters: this.state.parameters
-    }
+      parameters: this.state.parameters,
+    };
 
-    await setSwifts(swift)
-  }
+    await setSwifts(swift);
+  };
 
   render() {
     return (
@@ -55,7 +54,12 @@ export default class NewZap extends React.Component {
               <Form>
                 <FormGroup>
                   <label htmlFor="#name">Name</label>
-                  <FormInput onChange={(e) => { this.setState({name: e.target.value}) }} placeholder="Name" />
+                  <FormInput
+                    onChange={(e) => {
+                      this.setState({ name: e.target.value });
+                    }}
+                    placeholder="Name"
+                  />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="#description">Description</label>
@@ -63,27 +67,37 @@ export default class NewZap extends React.Component {
                     size="lg"
                     id="#description"
                     placeholder="Description"
-                    onChange={(e) => { this.setState({ description: e.target.value }) }}
+                    onChange={(e) => {
+                      this.setState({ description: e.target.value });
+                    }}
                   />
                 </FormGroup>
                 <FormGroup>
+                  <label htmlFor="#parametername">Parameter Name</label>
                   <FormInput placeholder="Parameter Name" />;
-                  <FormSelect onChange={(e) => { }}>
+                  <label htmlFor="#choose">Choose The Type</label>
+                  <FormSelect onChange={(e) => {}}>
                     <option value="first">Address</option>
                     <option value="second">Int</option>
                     <option value="third">String </option>
                   </FormSelect>
                 </FormGroup>
-                <Button onClick={this.addSwift}>Add Swift</Button>
+                <Button className="Button" outline pill theme="info">
+                  Add Swift
+                </Button>
               </Form>
             </Col>
-            <Col> 
+            <Col>
               <Card className="NewCard">
                 <CardBody>
                   <Form>
                     <FormGroup>
                       <label htmlFor="#name">Parameters</label>
-                      <FormInput name="paramName" placeholder="Parameter Name" />;
+                      <FormInput
+                        name="paramName"
+                        placeholder="Parameter Name"
+                      />
+                      ;
                       <FormSelect name="paramType">
                         <option value="first">Address</option>
                         <option value="second">Int</option>
@@ -96,6 +110,11 @@ export default class NewZap extends React.Component {
             </Col>
           </Row>
         </Container>
+        <center>
+          <Button className="Create" outline pill theme="info">
+            Create FZap
+          </Button>
+        </center>
       </div>
     );
   }

@@ -8,12 +8,12 @@ import {
   NavItem,
   NavLink,
   Collapse,
-  Button
+  Button,
 } from "shards-react";
 import makeBlockie from "ethereum-blockies-base64";
 
 import "./NavBar.css";
-import { getAccount, getWeb3Instance, defaultAddress } from './services'
+import { getAccount, getWeb3Instance, defaultAddress } from "./services";
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -28,20 +28,26 @@ export default class NavBar extends React.Component {
       collapseOpen: false,
       web3: null,
       userAddress: null,
-      shortUserAddress: null
+      shortUserAddress: null,
     };
   }
 
   async componentDidMount() {
-    await getWeb3Instance
+    await getWeb3Instance;
   }
 
   async getWeb3() {
-    await getAccount()
-    const userAddress = await defaultAddress()
+    await getAccount();
+    const userAddress = await defaultAddress();
 
-    const shortUserAddress = userAddress.substring(0,7) + '........' + userAddress.substring(userAddress.length -7, userAddress.length)
-    this.setState({ userAddress: userAddress, shortUserAddress:shortUserAddress })
+    const shortUserAddress =
+      userAddress.substring(0, 7) +
+      "........" +
+      userAddress.substring(userAddress.length - 7, userAddress.length);
+    this.setState({
+      userAddress: userAddress,
+      shortUserAddress: shortUserAddress,
+    });
   }
 
   toggleDropdown() {
@@ -92,22 +98,21 @@ export default class NavBar extends React.Component {
             <Nav navbar className="Nav">
               <NavItem className="NavItem">
                 <Button outline pill theme="info" onClick={this.getWeb3}>
-                  {
-                    this.state.userAddress ? (
-                      <div className="address-container">
-                        <img
-                          src={makeBlockie(this.state.userAddress)}
-                          alt="address blockie"
-                          className="address-blockie"
-                          width="15"
-                        />
-                        <span className="short-address">{this.state.shortUserAddress}</span>
-                      </div>
-
-                    ) : (<div>
-                      No Wallet Connected
-                    </div>)
-                  }
+                  {this.state.userAddress ? (
+                    <div className="address-container">
+                      <img
+                        src={makeBlockie(this.state.userAddress)}
+                        alt="address blockie"
+                        className="address-blockie"
+                        width="15"
+                      />
+                      <span className="short-address">
+                        {this.state.shortUserAddress}
+                      </span>
+                    </div>
+                  ) : (
+                    <div>No Wallet Connected</div>
+                  )}
                 </Button>
               </NavItem>
             </Nav>

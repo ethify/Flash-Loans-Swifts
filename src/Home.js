@@ -69,19 +69,21 @@ export default class Home extends React.Component {
     return (
       <HashRouter>
         <div>
-          <center>
-            <Container className="main-container">
-              <string>
+          <Container className="main-container">
+            <string>
+              <center>
                 <h4>Flash Zaps</h4>
-              </string>{" "}
-              <div className="Cards">
-                <Row>
-                  {this.state.swifts ? (
-                    this.state.swifts.map((swift) => (
-                      <div>
-                        <Col sm="12" md="4" lg="3">
-                          <Card className="Card">
-                            <CardHeader className="CardHeader">FZap</CardHeader>
+              </center>
+            </string>{" "}
+            <div className="Cards">
+              <Row>
+                {this.state.swifts ? (
+                  this.state.swifts.map((swift) => (
+                    <div>
+                      <Col sm="12" md="4" lg="3">
+                        <Card className="Card">
+                          <CardHeader className="CardHeader">FZap</CardHeader>
+                          <center>
                             <CardBody>
                               <CardTitle className="CardTitle">
                                 {swift.name}
@@ -94,26 +96,26 @@ export default class Home extends React.Component {
                               </CardTitle>
                               <div>
                                 <div className="Votes1">
-                                  <Button
+                                  <button
                                     value={swift.id}
                                     className="UpVote"
                                     onClick={this.upVoteSwift}
                                   >
                                     &uarr;
-                                  </Button>
+                                  </button>
                                 </div>
                                 <span className="UpNumber">
                                   {swift.upVotes}
                                 </span>
 
                                 <div className="Votes2">
-                                  <Button
+                                  <button
                                     value={swift.id}
                                     className="DownVote"
                                     onClick={this.downVoteSwift}
                                   >
                                     &darr;
-                                  </Button>
+                                  </button>
                                 </div>
                                 <span className="DownNumber">
                                   {swift.downVotes}
@@ -121,6 +123,9 @@ export default class Home extends React.Component {
                               </div>
                               <br />
                               <Button
+                                outline
+                                pill
+                                theme="info"
                                 className="UseButton"
                                 name={swift.id}
                                 onClick={(e) => {
@@ -132,26 +137,26 @@ export default class Home extends React.Component {
                                 Use This
                               </Button>
                             </CardBody>
-                          </Card>
-                        </Col>
-                      </div>
-                    ))
-                  ) : (
-                    <Col>
-                      <center>
-                        {" "}
-                        <GridLoader
-                          size={10}
-                          color={"#00FFFF"}
-                          loading={this.state.buyingPoolToken}
-                        />
-                      </center>
-                    </Col>
-                  )}{" "}
-                </Row>
-              </div>
-            </Container>
-          </center>
+                          </center>
+                        </Card>
+                      </Col>
+                    </div>
+                  ))
+                ) : (
+                  <Col>
+                    <center>
+                      {" "}
+                      <GridLoader
+                        size={10}
+                        color={"#00FFFF"}
+                        loading={this.state.buyingPoolToken}
+                      />
+                    </center>
+                  </Col>
+                )}{" "}
+              </Row>
+            </div>
+          </Container>
         </div>
       </HashRouter>
     );

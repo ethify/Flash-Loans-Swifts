@@ -1,5 +1,4 @@
 .Heading {
-  margin-top: 8%;
   text-align: center;
   margin-bottom: 5%;
 }
@@ -8,10 +7,9 @@
   align-items: center;
 }
 .Card {
-  width: 23rem;
+  width: 20rem;
   height: 23rem;
   margin-bottom: 2rem;
-  margin-left: 3%;
 }
 .CardDescription {
   font-size: large;
@@ -30,14 +28,24 @@
 .UpVote {
   color: black;
   display: inline-block;
+  background-color: rgb(119, 221, 119);
+}
+.UpVote:active {
+  border-color: aqua;
 }
 .DownVote {
   display: inline-block;
+  background-color: rgb(247, 113, 113);
 }
 .UpNumber {
-  margin-right: 3%;
+  margin-left: 3%;
 }
-
+.DownNumber {
+  margin-left: 3%;
+}
 .main-container {
   margin-top: 5rem;
+}
+.UseButton:hover {
+  color: black;
 }

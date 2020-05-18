@@ -24,3 +24,6 @@
 .NoWallet {
   float: right;
 }
+.address-blockie {
+  border-radius: 50%;
+}

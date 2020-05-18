@@ -24,9 +24,24 @@ export default class NewZap extends React.Component {
       name: "",
       description: "",
       parameters: [],
+      currentParamName: "",
+      currentParamType: "",
     };
     this.addSwift = this.addSwift.bind(this);
+    this.addParameter = this.addParameter.bind(this);
   }
+
+  addParameter = async () => {
+    const parameter = {
+      paramName: this.state.currentParamName,
+      paramType: this.state.currentParamType,
+    };
+
+    const currentParams = this.state.parameters;
+    currentParams.push(parameter);
+
+    this.setState({ parameters: currentParams });
+  };
 
   addSwift = async () => {
     const space = await getSpace();
@@ -64,6 +79,7 @@ export default class NewZap extends React.Component {
                     placeholder="Name"
                   />
                 </FormGroup>
+
                 <FormGroup>
                   <label htmlFor="#description">Description</label>
                   <FormInput
@@ -76,48 +92,79 @@ export default class NewZap extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <label htmlFor="#parametername">Parameter Name</label>
-                  <FormInput placeholder="Parameter Name" />;
-                  <label htmlFor="#choose">Choose The Type</label>
-                  <FormSelect onChange={(e) => {}}>
-                    <option value="first">Address</option>
-                    <option value="second">Int</option>
-                    <option value="third">String </option>
-                  </FormSelect>
+                  <label htmlFor="#choose">Choose</label>
+                  <FormInput type="file" />
                 </FormGroup>
-                <Button className="Button" outline pill theme="info">
-                  Add Swift
-                </Button>
+                <FormGroup>
+                  <label htmlFor="#cgoose">Choose</label>
+                  <FormInput type="file" />
+                </FormGroup>
+                <FormGroup>
+                  <label htmlFor="#parametername">Parameter Name</label>
+                  <FormInput
+                    onChange={(e) =>
+                      this.setState({ currentParamName: e.target.value })
+                    }
+                    placeholder="Parameter Name"
+                  />
+                  ;
+                  <FormGroup>
+                    <label htmlFor="#type">Choose The Type</label>
+                    <FormSelect
+                      onChange={(e) => {
+                        this.setState({ currentParamType: e.target.value });
+                      }}
+                    >
+                      <option value="address">Address</option>
+                      <option value="int">Int</option>
+                      <option value="string">String </option>
+                    </FormSelect>
+                  </FormGroup>
+                  <Button
+                    className="AddP"
+                    outline
+                    pill
+                    theme="info"
+                    onClick={this.addParameter}
+                  >
+                    Add Parameter
+                  </Button>
+                  <center>
+                    <Button
+                      className="AddS"
+                      outline
+                      pill
+                      theme="info"
+                      onClick={this.addSwift}
+                    >
+                      Add Swift
+                    </Button>
+                  </center>
+                </FormGroup>
               </Form>
             </Col>
+
             <Col>
-              <Card className="NewCard">
-                <CardBody>
-                  <Form>
-                    <FormGroup>
-                      <label htmlFor="#name">Parameters</label>
-                      <FormInput
-                        name="paramName"
-                        placeholder="Parameter Name"
-                      />
-                      ;
-                      <FormSelect name="paramType">
-                        <option value="first">Address</option>
-                        <option value="second">Int</option>
-                        <option value="third">String </option>
-                      </FormSelect>
-                    </FormGroup>
-                  </Form>
-                </CardBody>
-              </Card>
+              {this.state.parameters.length < 0 ? (
+                <div>No parameters Added</div>
+              ) : (
+                <div>
+                  {this.state.parameters.map((param) => (
+                    <Card className="NewCard">
+                      <CardBody>
+                        <center>
+                          <p>
+                            {param.paramName} - {param.paramType}
+                          </p>
+                        </center>
+                      </CardBody>
+                    </Card>
+                  ))}
+                </div>
+              )}
             </Col>
           </Row>
         </Container>
-        <center>
-          <Button className="Create" outline pill theme="info">
-            Create FZap
-          </Button>
-        </center>
       </div>
     );
   }

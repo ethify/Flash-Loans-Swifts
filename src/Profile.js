@@ -1,5 +1,5 @@
 import React from "react";
-
+import Avatar from "./avatar.png";
 import {
   Row,
   Col,
@@ -19,6 +19,10 @@ import {
 
 export default class Profile extends React.Component {
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <img src={Avatar} />
+      </div>
+    );
   }
 }

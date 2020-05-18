@@ -1,6 +1,5 @@
 .Heading {
   text-align: center;
-  margin-top: 4%;
 }
 .NewCard {
   width: 80%;
@@ -15,4 +14,22 @@
 }
 .Button {
   color: black;
+}
+.AddP {
+  margin-top: 4%;
+}
+.AddP:hover {
+  color: black;
+}
+.AddS:hover {
+  color: black;
+}
+.AddS {
+  margin-top: 3%;
+  align-content: center;
+  margin-left: 80%;
+}
+.NewCard {
+  margin-bottom: 3%;
+  width: 90%;
 }

@@ -20,7 +20,14 @@ import GridLoader from "react-spinners/GridLoader";
 
 import "./Home.css";
 
-import { getSwifts, getSpace } from "./services";
+import {
+  getSwifts,
+  getSpace,
+  setSwifts,
+  defaultAddress,
+  upVoteSwift,
+  downVoteSwift,
+} from "./services";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -29,6 +36,9 @@ export default class Home extends React.Component {
     this.state = {
       swifts: null,
     };
+
+    this.downVoteSwift = this.downVoteSwift.bind(this);
+    this.upVoteSwift = this.upVoteSwift.bind(this);
   }
 
   async componentDidMount() {
@@ -43,6 +53,16 @@ export default class Home extends React.Component {
     } else {
       this.setState({ swifts: swiftList });
     }
+  }
+
+  async downVoteSwift(e) {
+    const newSwifts = await downVoteSwift(e.target.value);
+    this.setState({ swift: newSwifts });
+  }
+
+  async upVoteSwift(e) {
+    const newSwifts = await upVoteSwift(e.target.value);
+    this.setState({ swift: newSwifts });
   }
 
   render() {
@@ -62,7 +82,6 @@ export default class Home extends React.Component {
                         <Col sm="12" md="4" lg="3">
                           <Card className="Card">
                             <CardHeader className="CardHeader">FZap</CardHeader>
-
                             <CardBody>
                               <CardTitle className="CardTitle">
                                 {swift.name}
@@ -70,23 +89,39 @@ export default class Home extends React.Component {
                               <p className="CardDescription">
                                 {swift.description}
                               </p>
-                              <CardTitle clasName="CardTitle2">
+                              <CardTitle className="CardTitle2">
                                 DevAddress
                               </CardTitle>
                               <div>
                                 <div className="Votes1">
-                                  <span clasName="UpVote">&uarr;</span>
+                                  <Button
+                                    value={swift.id}
+                                    className="UpVote"
+                                    onClick={this.upVoteSwift}
+                                  >
+                                    &uarr;
+                                  </Button>
                                 </div>
-                                <span clasName="UpNumber">4</span>
+                                <span className="UpNumber">
+                                  {swift.upVotes}
+                                </span>
 
                                 <div className="Votes2">
-                                  <span clasName="DownVote">&darr;</span>
+                                  <Button
+                                    value={swift.id}
+                                    className="DownVote"
+                                    onClick={this.downVoteSwift}
+                                  >
+                                    &darr;
+                                  </Button>
                                 </div>
-                                <span clasName="DownNumber">1</span>
+                                <span className="DownNumber">
+                                  {swift.downVotes}
+                                </span>
                               </div>
                               <br />
                               <Button
-                                clasName="UseButton"
+                                className="UseButton"
                                 name={swift.id}
                                 onClick={(e) => {
                                   this.props.history.push(
@@ -112,7 +147,7 @@ export default class Home extends React.Component {
                         />
                       </center>
                     </Col>
-                  )}
+                  )}{" "}
                 </Row>
               </div>
             </Container>

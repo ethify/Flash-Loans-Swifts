@@ -3,7 +3,7 @@ import IdentityWallet from "identity-wallet";
 import Onboard from "bnc-onboard";
 import * as Web3 from "web3";
 
-const seed = "0x7acca0ba544b6bb3f6ad3cfdcd375b76a2c1587250f0036f00d1d476bbb679b3";
+const seed = "0x7acca0ba544b6bb3f6ad3cfdcd385b76a2c1587250f0036f00d1d476bbb679b3";
 
 let box
 let space
@@ -13,12 +13,12 @@ const onboard = Onboard({
     dappId: "052b3fe9-87d5-4614-b2e9-6dd81115979a", // [String] The API key created by step one above
     networkId: 4, // [Integer] The Ethereum network ID your Dapp uses.
     subscriptions: {
-      wallet: (wallet) => {
-        web3 = new Web3(wallet.provider);
-      },
+        wallet: (wallet) => {
+            web3 = new Web3(wallet.provider);
+        },
     },
-  });
-  
+});
+
 
 export const getAccount = async () => {
     await onboard.walletSelect();
@@ -77,11 +77,75 @@ export const setSwifts = async (swiftData) => {
     console.log('now Swifts', newSwifts)
 }
 
-export const upVoteSwift = async () => {
+export const updateSwifts = async (newSwifts) => {
+    space.public.set('swiftsLists', newSwifts)
 
+    const newUpdatedSwifts = await getSwifts()
+    console.log('now Updated Swifts', newUpdatedSwifts)
+
+    return newUpdatedSwifts
 }
 
-export const downVoteSwift = async () => {
+export const upVoteSwift = async (swiftID) => {
+    let currentSwifts = await getSwifts()
 
+    const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
+        return filter.id === swiftID
+    })
+
+    const currentUserAddress = await defaultAddress()
+
+    const voterInstanceIndex = currentSwifts[selectedSwiftIndex].voters.findIndex((voter) => voter.voterAddress === currentUserAddress )
+
+    if (voterInstanceIndex !== -1) {
+        console.log('Already Voted')
+        const currentVote = currentSwifts[selectedSwiftIndex].voters[voterInstanceIndex].vote
+        if (currentVote === true){
+            console.log('Deleteing Vote')
+            currentSwifts[selectedSwiftIndex].upVotes--
+            currentSwifts[selectedSwiftIndex].voters.splice(voterInstanceIndex,1)
+        } else {
+            console.log('Already Voted Down')
+        }
+        return
+    } else {
+        currentSwifts[selectedSwiftIndex].voters.push({ voterAddress: currentUserAddress , vote: true})
+        currentSwifts[selectedSwiftIndex].upVotes++
+    }
+
+    const newUpdatedSwifts = await updateSwifts(currentSwifts)
+    return newUpdatedSwifts
 }
 
+export const downVoteSwift = async (swiftID) => {
+    let currentSwifts = await getSwifts()
+
+    const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
+        return filter.id === swiftID
+    })
+
+    const currentUserAddress = await defaultAddress()
+    
+
+    const voterInstanceIndex = currentSwifts[selectedSwiftIndex].voters.findIndex((voter) => voter.voterAddress === currentUserAddress )
+
+    if (voterInstanceIndex !== -1) {
+        console.log('Already Voted')
+        const currentVote = currentSwifts[selectedSwiftIndex].voters[voterInstanceIndex].vote
+        if (currentVote === false){
+            console.log('Deleting Vote')
+            currentSwifts[selectedSwiftIndex].downVotes--
+            currentSwifts[selectedSwiftIndex].voters.splice(voterInstanceIndex,1)
+            console.log('This voters',currentSwifts[selectedSwiftIndex].voters)
+        } else {
+            console.log('Already Voted Up')
+        }
+        return
+    } else {
+        currentSwifts[selectedSwiftIndex].voters.push({ voterAddress: currentUserAddress , vote: false})
+        currentSwifts[selectedSwiftIndex].downVotes++
+    }
+
+    const newUpdatedSwifts = await updateSwifts(currentSwifts)
+    return newUpdatedSwifts
+}

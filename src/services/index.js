@@ -6,7 +6,7 @@ import * as Web3 from "web3";
 const seed = "0x7acca0ba544b6bb3f6ad3cfdcd385b76a2c1587250f0036f00d1d476bbb679b3";
 
 let box
-let space
+let space = null
 let web3
 
 const onboard = Onboard({
@@ -55,8 +55,20 @@ export const getSpace = async () => {
 }
 
 export const getSwifts = async () => {
+    if(!space) {
+        await get3BoxInstance()
+        await getSpace()
+    }
     const swifts = await space.public.get('swiftsLists')
     return swifts
+}
+
+export const getSwift = async (swiftID) => {
+    const allSwifts = await getSwifts()
+    console.log('All Swifts', allSwifts)
+    const swift = allSwifts.find((swift) => swift.id === swiftID)
+    console.log('swift', swift)
+    return swift
 }
 
 export const setSwifts = async (swiftData) => {

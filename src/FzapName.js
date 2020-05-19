@@ -9,43 +9,82 @@ import {
   Container,
   Row,
   Col,
+  Button,
 } from "shards-react";
+
+import { getSwift } from './services'
+
 export default class NewZap extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentSwiftID: '',
+      currentSwift: {
+        parameters: []
+      }
+    }
+  }
+
+  async componentDidMount() {
+    const swiftID = this.props.match.params.swiftUUID
+    console.log(swiftID, 'swiftID');
+
+    const swift = await getSwift(swiftID)
+
+    console.log('curent siwft', swiftID)
+
+    this.setState({ currentSwift: swift, currentSwiftID: swiftID })
+  }
+
   render() {
     return (
       <div>
-        <h2 className="Heading"> FZap Name </h2>
-        <center>
-          <Card className="FzapCard">
-            <CardBody>
-              <Form>
-                <FormGroup>
-                  <div>
-                    <Container>
-                      <Row>
-                        <Col>
-                          <label className="Inline" htmlFor="#parametername">
-                            Parameter Name
-                          </label>
-                        </Col>
-                        <Col>
-                          <FormInput
-                            className="Inline"
-                            id="#parametername"
-                            placeholder="Parameter"
-                          />
-                        </Col>
-                        <Col>
-                          <label className="Inline">Parameter Type</label>
-                        </Col>
-                      </Row>
-                    </Container>
-                  </div>
-                </FormGroup>
-              </Form>
-            </CardBody>
-          </Card>
-        </center>
+        <Container className="main-container">
+          <h4 className="Heading">{this.state.currentSwift.name}</h4>
+          <center>
+            <Card className="FzapCard">
+              <CardBody>
+                <p>{this.state.currentSwift.description}</p>
+              </CardBody>
+            </Card>
+            <Card className="FzapCard">
+              <CardBody>
+                <Form>
+                  <FormGroup>
+                    <div>
+                      <Container>
+                        {
+                          this.state.currentSwift.parameters.map((param) =>
+                            <Row>
+                              <Col>
+                                <label className="Inline" htmlFor="#parametername">
+                                  {param.paramName}
+                                </label>
+                              </Col>
+                              <Col>
+                                <FormInput
+                                  className="Inline"
+                                  id="#parametername"
+                                  placeholder="Parameter"
+                                />
+                              </Col>
+                              <Col>
+                                <label className="Inline">{param.paramType}</label>
+                              </Col>
+                            </Row>
+                          )
+                        }
+                      </Container>
+                    </div>
+                  </FormGroup>
+                </Form>
+              </CardBody>
+              <Button>Execute Swift</Button>
+            </Card>
+          </center>
+        </Container>
       </div>
     );
   }

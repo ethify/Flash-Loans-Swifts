@@ -115,6 +115,7 @@ export default class NewZap extends React.Component {
                         this.setState({ currentParamType: e.target.value });
                       }}
                     >
+                      <option value="">Select Parameter Type</option>
                       <option value="address">Address</option>
                       <option value="int">Int</option>
                       <option value="string">String </option>

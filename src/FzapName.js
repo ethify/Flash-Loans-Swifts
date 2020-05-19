@@ -14,7 +14,7 @@ import {
 
 import { getSwift } from './services'
 
-export default class NewZap extends React.Component {
+export default class FZapName extends React.Component {
 
   constructor(props) {
     super(props);
@@ -23,8 +23,11 @@ export default class NewZap extends React.Component {
       currentSwiftID: '',
       currentSwift: {
         parameters: []
-      }
+      },
+      parametersInput: []
     }
+
+    this.executeSwift = this.executeSwift.bind(this)
   }
 
   async componentDidMount() {
@@ -38,6 +41,11 @@ export default class NewZap extends React.Component {
     this.setState({ currentSwift: swift, currentSwiftID: swiftID })
   }
 
+  async executeSwift() {
+    console.log('Executing Swift')
+    console.log(this.state)
+  }
+
   render() {
     return (
       <div>
@@ -49,6 +57,8 @@ export default class NewZap extends React.Component {
                 <p>{this.state.currentSwift.description}</p>
               </CardBody>
             </Card>
+
+            <br/>
             <Card className="FzapCard">
               <CardBody>
                 <Form>
@@ -66,8 +76,13 @@ export default class NewZap extends React.Component {
                               <Col>
                                 <FormInput
                                   className="Inline"
-                                  id="#parametername"
+                                  name={param.paramName}
                                   placeholder="Parameter"
+                                  onChange={(e) => {
+                                    const paramName = param.paramName
+                                    this.setState({ [paramName]: e.target.value })
+                                    console.log('parametersINput', this.state)
+                                  }}
                                 />
                               </Col>
                               <Col>
@@ -76,12 +91,13 @@ export default class NewZap extends React.Component {
                             </Row>
                           )
                         }
+                        <br/>
                       </Container>
                     </div>
                   </FormGroup>
                 </Form>
+                <Button onClick={this.executeSwift}>Execute Swift</Button>
               </CardBody>
-              <Button>Execute Swift</Button>
             </Card>
           </center>
         </Container>

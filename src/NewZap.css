@@ -1,12 +1,20 @@
 .Heading {
   text-align: center;
+  margin-top: 2%;
 }
 .NewCard {
   width: 80%;
 }
+.NewCard1 {
+  width: 40%;
+  height: 3rem;
+  margin-top: 3%;
+  border: 2px solid #00b8d8;
+  box-shadow: 5px 5px #00b8d8;
+}
 
 .navbar {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.160784);
+  box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.160784);
 }
 .Create {
   margin-top: 3%;
@@ -16,7 +24,8 @@
   color: black;
 }
 .AddP {
-  margin-top: 4%;
+  margin-top: 9%;
+  color: black;
 }
 .AddP:hover {
   color: black;
@@ -27,9 +36,14 @@
 .AddS {
   margin-top: 3%;
   align-content: center;
-  margin-left: 80%;
+  color: #000;
+  text-align: center;
 }
 .NewCard {
   margin-bottom: 3%;
   width: 90%;
+}
+.Form:active {
+  border-color: cyan;
+  box-shadow: 10px 10px 10px 10px black;
 }

@@ -80,18 +80,14 @@ export default class NavBar extends React.Component {
           <Collapse open={this.state.collapseOpen} navbar>
             <Nav navbar className="Nav">
               <NavItem className="NavItem">
-                <Button outline pill theme="info">
-                  <Link className="Link" to="/">
-                    Flash Zap
-                  </Link>
-                </Button>
+                <Link className="Link" to="/">
+                  Flash Zap
+                </Link>
               </NavItem>
               <NavItem className="NavItem1">
-                <Button outline pill theme="info">
-                  <Link className="Link" to="/new-zap">
-                    Add New
-                  </Link>
-                </Button>
+                <Link className="Link" to="/new-zap">
+                  Add New
+                </Link>
               </NavItem>
             </Nav>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import "./NewZap.css";
-import {verifyFile} from './services/FileServices';
+import { verifyFile } from "./services/FileServices";
 import {
   Form,
   FormInput,
@@ -27,7 +27,7 @@ export default class NewZap extends React.Component {
       parameters: [],
       currentParamName: "",
       currentParamType: "",
-      filereader : null,
+      filereader: null,
     };
     this.addSwift = this.addSwift.bind(this);
     this.addParameter = this.addParameter.bind(this);
@@ -44,19 +44,17 @@ export default class NewZap extends React.Component {
 
     this.setState({ parameters: currentParams });
   };
-  handleFileRead = (e) =>{
+  handleFileRead = (e) => {
     const content = this.state.fileReader.result;
-    var resp =verifyFile(content.toString());
+    var resp = verifyFile(content.toString());
     // console.log("Linter test"+resp.toString());
     // console.log(content);
     // if resp? doNothing: ShowError();
-   
   };
-  handleFileChosen = (file ) => {
-    this.state.fileReader  = new FileReader();
+  handleFileChosen = (file) => {
+    this.state.fileReader = new FileReader();
     this.state.fileReader.onloadend = this.handleFileRead;
     this.state.fileReader.readAsText(file);
-   
   };
 
   addSwift = async () => {
@@ -80,114 +78,149 @@ export default class NewZap extends React.Component {
   render() {
     return (
       <div>
-        <Container className="main-container">
-          <h4>Add New Zap</h4>
-          <br />
-          <Row>
-            <Col>
+        <h4 className="Heading">Add New Zap</h4>
+        <center>
+          <Card className="NewCard">
+            <CardBody>
               <Form>
-                <FormGroup>
-                  <label htmlFor="#name">Name</label>
-                  <FormInput
-                    onChange={(e) => {
-                      this.setState({ name: e.target.value });
-                    }}
-                    placeholder="Name"
-                  />
-                </FormGroup>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#name">Name</label>
+                        <FormInput
+                          className="Form"
+                          onChange={(e) => {
+                            this.setState({ name: e.target.value });
+                          }}
+                          placeholder="Name"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#cgoose">Choose</label>
+                        <FormInput type="file" />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </Container>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#description">Description</label>
+                        <FormInput
+                          size="lg"
+                          id="#description"
+                          placeholder="Description"
+                          onChange={(e) => {
+                            this.setState({
+                              description: e.target.value,
+                            });
+                          }}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#choose">Choose</label>
+                        <FormInput
+                          type="file"
+                          id="file"
+                          className="input-file"
+                          accept=".sol"
+                          onChange={(e) =>
+                            this.handleFileChosen(e.target.files[0])
+                          }
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </Container>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#parametername">Parameter Name</label>
+                        <FormInput
+                          onChange={(e) => {
+                            this.setState({ currentParamName: e.target.value });
+                          }}
+                          placeholder="Parameter Name"
+                        />
+                        ;
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#type">Choose The Type</label>
+                        <FormSelect
+                          onChange={(e) => {
+                            this.setState({
+                              currentParamType: e.target.value,
+                            });
+                          }}
+                        >
+                          <option value="">Select Parameter Type</option>
+                          <option value="Address">Address</option>
+                          <option value="Int">Int</option>
+                          <option value="String">String </option>
+                        </FormSelect>
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <Button
+                        className="AddP"
+                        outline
+                        pill
+                        theme="info"
+                        onClick={this.addParameter}
+                      >
+                        Add Parameter
+                      </Button>
+                    </Col>
+                  </Row>
+                </Container>
 
-                <FormGroup>
-                  <label htmlFor="#description">Description</label>
-                  <FormInput
-                    size="lg"
-                    id="#description"
-                    placeholder="Description"
-                    onChange={(e) => {
-                      this.setState({ description: e.target.value });
-                    }}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="#choose">Choose</label>
-                  <FormInput type="file" 
-                    id = 'file'
-                    className = 'input-file'
-                    accept = ".sol"
-                    onChange = {e => this.handleFileChosen(e.target.files[0])}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="#cgoose">Choose</label>
-                  <FormInput type="file" />
-                </FormGroup>
-                <FormGroup>
-                  <label htmlFor="#parametername">Parameter Name</label>
-                  <FormInput
-                    onChange={(e) =>{
-                      this.setState({  currentParamName: e.target })
-                    }}
-                    placeholder="Parameter Name"
-                  />
-                  ;
-                  <FormGroup>
-                    <label htmlFor="#type">Choose The Type</label>
-                    <FormSelect
-                      onChange={(e) => {
-                        this.setState({ currentParamType: e.target.value });
-                      }}
-                    >
-                      <option value="">Select Parameter Type</option>
-                      <option value="address">Address</option>
-                      <option value="int">Int</option>
-                      <option value="string">String </option>
-                    </FormSelect>
-                  </FormGroup>
+                {this.state.parameters.length < 0 ? (
+                  <div>No parameters Added</div>
+                ) : (
+                  <div>
+                    {this.state.parameters.map((param) => (
+                      <Card className="NewCard1">
+                        <CardBody>
+                          <Row className="Param">
+                            <Col>
+                              <h5>Parameter Name </h5>
+                              <h5>{param.paramName}</h5>
+                            </Col>
+                            <Col>
+                              <h5>Parameter Type</h5>
+                              <h5>{param.paramType}</h5>
+                            </Col>
+                          </Row>
+                        </CardBody>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                <center>
                   <Button
-                    className="AddP"
+                    className="AddS"
                     outline
                     pill
                     theme="info"
-                    onClick={this.addParameter}
+                    onClick={this.addSwift}
                   >
-                    Add Parameter
+                    Add Swift
                   </Button>
-                 
-                  <center>
-                    <Button
-                      className="AddS"
-                      outline
-                      pill
-                      theme="info"
-                      onClick={this.addSwift}
-                    >
-                      Add Swift
-                    </Button>
-                  </center>
-                </FormGroup>
+                </center>
               </Form>
-            </Col>
-
-            <Col>
-              {this.state.parameters.length < 0 ? (
-                <div>No parameters Added</div>
-              ) : (
-                <div>
-                  {this.state.parameters.map((param) => (
-                    <Card className="NewCard">
-                      <CardBody>
-                        <center>
-                          <p>
-                            {param.paramName} - {param.paramType}
-                          </p>
-                        </center>
-                      </CardBody>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </Col>
-          </Row>
-        </Container>
+            </CardBody>{" "}
+          </Card>
+        </center>
       </div>
     );
   }

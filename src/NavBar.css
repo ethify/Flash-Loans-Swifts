@@ -8,11 +8,12 @@
   width: 70rem;
 }
 .Link {
-  color: #000;
+  color: cyan;
+  font-size: large;
 }
 .Link:hover {
   text-decoration: none;
-  color: #000;
+  color: azure;
 }
 .address-blockie {
   float: left;
@@ -26,4 +27,8 @@
 }
 .address-blockie {
   border-radius: 50%;
+}
+.navbar {
+  background-color: black;
+  color: white;
 }

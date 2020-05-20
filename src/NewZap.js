@@ -108,53 +108,68 @@
         voters: [],
         upVotes: 0,
         downVotes: 0,
-        skylink: skylink
+        contractSourceSkylink: skylink,
+        contractABI: this.state.contractABI,
+        contractByteCode: this.state.contractByteCode
       };
 
       await setSwifts(swift);
     };
 
-    render() {
-      return (
-        <div>
-          <Container className="main-container">
-            <h4>Add New Zap</h4>
-            <br />
-            <Row>
-              <Col>
-                <Form>
-                  <FormGroup>
-                    <label htmlFor="#name">Name</label>
-                    <FormInput
-                      onChange={(e) => {
-                        this.setState({ name: e.target.value });
-                      }}
-                      placeholder="Name"
-                    />
-                  </FormGroup>
+  render() {
+    return (
+      <div>
+        <h4 className="Heading">Add New Zap</h4>
+        <center>
+          <Card className="NewCard">
+            <CardBody>
+              <Form>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#name">Name</label>
+                        <FormInput
+                          className="Form"
+                          onChange={(e) => {
+                            this.setState({ name: e.target.value });
+                          }}
+                          placeholder="Name"
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                </Container>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#description">Description</label>
+                        <FormInput
+                          size="lg"
+                          id="#description"
+                          placeholder="Description"
+                          onChange={(e) => {
+                            this.setState({
+                              description: e.target.value,
+                            });
+                          }}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#choose">Choose</label>
+                        <FormInput
+                          type="file"
+                          id="file"
+                          className="input-file"
+                          accept=".sol"
+                          onChange={this.handleFileChosen}
+                        />
+                      </FormGroup>
 
-                  <FormGroup>
-                    <label htmlFor="#description">Description</label>
-                    <FormInput
-                      size="lg"
-                      id="#description"
-                      placeholder="Description"
-                      onChange={(e) => {
-                        this.setState({ description: e.target.value });
-                      }}
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <label htmlFor="#choose">Choose</label>
-                    <FormInput type="file"
-                      id='file'
-                      className='input-file'
-                      accept=".sol"
-                      onChange={this.handleFileChosen}
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
+                      <FormGroup>
                     <label htmlFor="#bytecode">Contract ByteCode</label>
                     <FormInput
                       size="lg"
@@ -177,79 +192,93 @@
                       }}
                     />
                   </FormGroup>
-
-                  <FormGroup>
-                    <label htmlFor="#parametername">Parameter Name</label>
-                    <FormInput
-                      onChange={(e) => {
-                        this.setState({ currentParamName: e.target.value })
-                      }}
-                      placeholder="Parameter Name"
-                    />
-                    ;
-                    <FormGroup>
-                      <label htmlFor="#type">Choose The Type</label>
-                      <FormSelect
-                        onChange={(e) => {
-                          this.setState({ currentParamType: e.target.value });
-                        }}
-                      >
-                        <option value="">Select Parameter Type</option>
-                        <option value="address">Address</option>
-                        <option value="int">Int</option>
-                        <option value="string">String </option>
-                      </FormSelect>
-                    </FormGroup>
-                    <Button
-                      className="AddP"
-                      outline
-                      pill
-                      theme="info"
-                      onClick={this.addParameter}
-                    >
-                      Add Parameter
-                    </Button>
-
-                    <center>
+                    </Col>
+                  </Row>
+                </Container>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#parametername">Parameter Name</label>
+                        <FormInput
+                          onChange={(e) => {
+                            this.setState({ currentParamName: e.target.value });
+                          }}
+                          placeholder="Parameter Name"
+                        />
+                        ;
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#type">Choose The Type</label>
+                        <FormSelect
+                          onChange={(e) => {
+                            this.setState({
+                              currentParamType: e.target.value,
+                            });
+                          }}
+                        >
+                          <option value="">Select Parameter Type</option>
+                          <option value="Address">Address</option>
+                          <option value="Int">Int</option>
+                          <option value="String">String </option>
+                        </FormSelect>
+                      </FormGroup>
+                    </Col>
+                    <Col>
                       <Button
-                        className="AddS"
+                        className="AddP"
                         outline
                         pill
                         theme="info"
-                        onClick={this.addSwift}
+                        onClick={this.addParameter}
                       >
-                        Add Swift
+                        Add Parameter
                       </Button>
-                      <Button onClick={this.testUpload}>
-                        Test Upload
-                      </Button>
-                    </center>
-                  </FormGroup>
-                </Form>
-              </Col>
+                    </Col>
+                  </Row>
+                </Container>
 
-              <Col>
                 {this.state.parameters.length < 0 ? (
                   <div>No parameters Added</div>
                 ) : (
-                    <div>
-                      {this.state.parameters.map((param) => (
-                        <Card className="NewCard">
-                          <CardBody>
-                            <center>
-                              <p>
-                                {param.paramName} - {param.paramType}
-                              </p>
-                            </center>
-                          </CardBody>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-              </Col>
-            </Row>
-          </Container>
-        </div>
-      );
-    }
+                  <div>
+                    {this.state.parameters.map((param) => (
+                      <Card className="NewCard1">
+                        <CardBody>
+                          <Row className="Param">
+                            <Col>
+                              <h5>Parameter Name </h5>
+                              <h5>{param.paramName}</h5>
+                            </Col>
+                            <Col>
+                              <h5>Parameter Type</h5>
+                              <h5>{param.paramType}</h5>
+                            </Col>
+                          </Row>
+                        </CardBody>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+
+                <center>
+                  <Button
+                    className="AddS"
+                    outline
+                    pill
+                    theme="info"
+                    onClick={this.addSwift}
+                  >
+                    Add Swift
+                  </Button>
+                </center>
+              </Form>
+            </CardBody>{" "}
+          </Card>
+        </center>
+      </div>
+    );
   }
+}

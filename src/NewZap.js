@@ -1,5 +1,6 @@
 import React from "react";
 import "./NewZap.css";
+import {verifyFile} from './services/FileServices';
 import {
   Form,
   FormInput,
@@ -26,6 +27,7 @@ export default class NewZap extends React.Component {
       parameters: [],
       currentParamName: "",
       currentParamType: "",
+      filereader : null,
     };
     this.addSwift = this.addSwift.bind(this);
     this.addParameter = this.addParameter.bind(this);
@@ -41,6 +43,20 @@ export default class NewZap extends React.Component {
     currentParams.push(parameter);
 
     this.setState({ parameters: currentParams });
+  };
+  handleFileRead = (e) =>{
+    const content = this.state.fileReader.result;
+    var resp =verifyFile(content.toString());
+    // console.log("Linter test"+resp.toString());
+    // console.log(content);
+    // if resp? doNothing: ShowError();
+   
+  };
+  handleFileChosen = (file ) => {
+    this.state.fileReader  = new FileReader();
+    this.state.fileReader.onloadend = this.handleFileRead;
+    this.state.fileReader.readAsText(file);
+   
   };
 
   addSwift = async () => {
@@ -93,7 +109,12 @@ export default class NewZap extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="#choose">Choose</label>
-                  <FormInput type="file" />
+                  <FormInput type="file" 
+                    id = 'file'
+                    className = 'input-file'
+                    accept = ".sol"
+                    onChange = {e => this.handleFileChosen(e.target.files[0])}
+                  />
                 </FormGroup>
                 <FormGroup>
                   <label htmlFor="#cgoose">Choose</label>
@@ -102,9 +123,9 @@ export default class NewZap extends React.Component {
                 <FormGroup>
                   <label htmlFor="#parametername">Parameter Name</label>
                   <FormInput
-                    onChange={(e) =>
-                      this.setState({ currentParamName: e.target.value })
-                    }
+                    onChange={(e) =>{
+                      this.setState({  currentParamName: e.target })
+                    }}
                     placeholder="Parameter Name"
                   />
                   ;
@@ -130,6 +151,7 @@ export default class NewZap extends React.Component {
                   >
                     Add Parameter
                   </Button>
+                 
                   <center>
                     <Button
                       className="AddS"

@@ -1,6 +1,5 @@
 export const verifyFile = (content) => {
     let str = content.toString().split(' ').join('');
-    console.log(str.toString());
     const searchStr1 = `constructor(address _addressProvider,address _zapper,address _fzap) FlashLoanReceiverBase(_addressProvider) public { 
         zapper =_zapper;
         fzap = _fzap;
@@ -50,7 +49,6 @@ export const verifyFile = (content) => {
 }
 const  getIndicesOf= (searchStr, str, startIndex,caseSensitive) => {
     searchStr = searchStr.split(" ").join("");
-    console.log(searchStr);
     var searchStrLen = searchStr.length;
     var returnVal = [0,0];
     if (searchStrLen == 0) {

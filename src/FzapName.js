@@ -1,5 +1,6 @@
 import React from "react";
 import "./FzapName.css";
+import {deployContract} from "./services/Web3Services"
 import {
   CardBody,
   Card,
@@ -28,6 +29,7 @@ export default class FZapName extends React.Component {
     }
 
     this.executeSwift = this.executeSwift.bind(this)
+    this.deploy = this.deploy.bind(this)
   }
 
   async componentDidMount() {
@@ -37,6 +39,7 @@ export default class FZapName extends React.Component {
     const swift = await getSwift(swiftID)
 
     console.log('curent siwft', swiftID)
+    console.log(swift.contractByteCode)
 
     this.setState({ currentSwift: swift, currentSwiftID: swiftID })
   }
@@ -44,6 +47,13 @@ export default class FZapName extends React.Component {
   async executeSwift() {
     console.log('Executing Swift')
     console.log(this.state)
+  }
+  async deploy() {
+    const swiftID = this.props.match.params.swiftUUID
+    console.log(swiftID, 'swiftID');
+
+    const swift = await getSwift(swiftID)
+    deployContract(swift.contractByteCode, swift.contractABI)
   }
 
   render() {
@@ -69,6 +79,9 @@ export default class FZapName extends React.Component {
                           this.state.currentSwift.parameters.map((param) =>
                             <Row>
                               <Col>
+                              <Button
+                                onClick={this.deploy()}
+                              />
                                 <label className="Inline" htmlFor="#parametername">
                                   {param.paramName}
                                 </label>

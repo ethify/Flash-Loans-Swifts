@@ -2,6 +2,7 @@ import React from "react";
 import "./FzapName.css";
 import {deployContract,executeOperation, withdraw} from "./services/Web3Services"
 import {getWeb3Instance} from "./services/index"
+import * as Web3 from "web3";
 import {
   CardBody,
   Card,
@@ -49,10 +50,19 @@ export default class FZapName extends React.Component {
 
   async executeSwift() {
     var args =[]
-    this.state.currentSwift.parameters.map((param) =>args.push(this.state[param.paramName]))
-    // const web3 = await getWeb3Instance();
-    // var amt ="1";
-    //var args = ["0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",web3.utils.toWei(amt, "ether")]
+    this.state.currentSwift.parameters.map(async (param) =>
+    {if(param.paramName=="amount"){
+      const web3 = new Web3();
+      var amt = web3.utils.toWei(this.state[param.paramName], "ether");
+      args.push(amt)
+    }else{
+      args.push(this.state[param.paramName])
+    }
+    })
+    console.log(args);
+    const web3 = await getWeb3Instance();
+    var amt ="1";
+    var args = ["0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",web3.utils.toWei(amt, "ether")]
     const swiftID = this.props.match.params.swiftUUID
     console.log(swiftID, 'swiftID');
     const swift = await getSwift(swiftID)

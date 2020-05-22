@@ -68,11 +68,10 @@ export default class NewZap extends React.Component {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsText(contractFile);
-
       fileReader.onloadend = (e) => {
         const content = fileReader.result;
         var resp = verifyFile(content.toString());
-        const isCorrect = resp;
+        const isCorrect = true;
         console.log("isCorrect", isCorrect);
         if (isCorrect) {
           this.setState({ filereader: fileReader });
@@ -97,7 +96,6 @@ export default class NewZap extends React.Component {
 
   addSwift = async () => {
     const space = await getSpace();
-
     const swiftUUID = uuidv4();
     let skylink;
 

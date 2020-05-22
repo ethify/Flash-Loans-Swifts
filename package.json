@@ -19,7 +19,8 @@
     "react-spinners": "^0.8.3",
     "shards-react": "^1.0.3",
     "skynet-js": "0.0.1",
-    "uuid": "^8.0.0"
+    "uuid": "^8.0.0",
+    "web3": "^1.2.8"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -48,7 +48,7 @@ export default class FZapName extends React.Component {
     console.log('Executing Swift')
     console.log(this.state)
   }
-  async deploy() {
+  deploy= async() =>{
     const swiftID = this.props.match.params.swiftUUID
     console.log(swiftID, 'swiftID');
 
@@ -69,6 +69,9 @@ export default class FZapName extends React.Component {
             </Card>
 
             <br/>
+            <Button
+                                onClick={this.deploy}
+                              />
             <Card className="FzapCard">
               <CardBody>
                 <Form>
@@ -79,9 +82,7 @@ export default class FZapName extends React.Component {
                           this.state.currentSwift.parameters.map((param) =>
                             <Row>
                               <Col>
-                              <Button
-                                onClick={this.deploy()}
-                              />
+                              
                                 <label className="Inline" htmlFor="#parametername">
                                   {param.paramName}
                                 </label>

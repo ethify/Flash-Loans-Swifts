@@ -46,3 +46,17 @@ export const executeOperation=async(address,abi,args)=>{
         })
     return txhash;
 }
+export const withdraw=async(address,abi,assetAddress)=>{
+    var txhash;
+    const abiJson = JSON.parse(abi);
+    const web3 = await getWeb3Instance();
+    var newContract =  new web3.eth.Contract(abiJson,address);
+    var tx;
+   
+    newContract.methods.withdraw(assetAddress).send({from:await defaultAddress(),gas: web3.utils.toHex(222000),
+        gasPrice: web3.utils.toHex(web3.utils.toWei('100', 'gwei'))},function(err, txh){
+            console.log(txh, err)
+            txhash=txh;
+        })
+    return txhash;
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import "./FzapName.css";
-import {deployContract,executeOperation} from "./services/Web3Services"
+import {deployContract,executeOperation, withdraw} from "./services/Web3Services"
 import {getWeb3Instance} from "./services/index"
 import {
   CardBody,
@@ -22,6 +22,7 @@ export default class FZapName extends React.Component {
     super(props);
 
     this.state = {
+      asset:"",
       currentSwiftID: '',
       currentSwift: {
         parameters: []
@@ -49,8 +50,8 @@ export default class FZapName extends React.Component {
   async executeSwift() {
     var args =[]
     this.state.currentSwift.parameters.map((param) =>args.push(this.state[param.paramName]))
-    const web3 = await getWeb3Instance();
-    var amt ="1";
+    // const web3 = await getWeb3Instance();
+    // var amt ="1";
     //var args = ["0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",web3.utils.toWei(amt, "ether")]
     const swiftID = this.props.match.params.swiftUUID
     console.log(swiftID, 'swiftID');
@@ -67,11 +68,15 @@ export default class FZapName extends React.Component {
     console.log("deployed",contract);
     this.setState({contract : contract});
   }
-  execute = async () => {
+  withdrawAsset = async () => {
+    const swiftID = this.props.match.params.swiftUUID
+    console.log(swiftID, 'swiftID');
+    const swift = await getSwift(swiftID)
     const contractAddress = this.state.contract;
-    const tx= await executeOperation(contractAddress);
+    const tx= await withdraw(contractAddress,swift.contractABI,this.state.asset);
     console.log(tx)
   }
+
 
   render() {
     return (
@@ -128,6 +133,32 @@ export default class FZapName extends React.Component {
                   </FormGroup>
                 </Form>
                 <Button onClick={this.executeSwift}>Execute Swift</Button>
+                <br/>
+                <Row>
+                              <Col>
+                              
+                                <label className="Inline" htmlFor="#parametername">
+                                  Asset Address
+                                </label>
+                              </Col>
+                              <Col>
+                                <FormInput
+                                  className="Inline"
+                                  name="asset"
+                                  placeholder="Parameter"
+                                  onChange={(e) => {
+                                    this.setState({ asset: e.target.value })
+                                    console.log('parametersINput', this.state.asset)
+                                  }}
+                                />
+                              </Col>
+                              <Col>
+                                <label className="Inline">Asset Address</label>
+                              </Col>
+                            </Row>
+                            <br/>
+                            <Button onClick={this.withdrawAsset}>withdraw</Button>
+ 
               </CardBody>
             </Card>
           </center>

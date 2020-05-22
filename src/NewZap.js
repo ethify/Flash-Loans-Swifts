@@ -1,120 +1,125 @@
-  import React from "react";
-  import "./NewZap.css";
-  import { verifyFile } from './services/FileServices';
-  import {
-    Form,
-    FormInput,
-    FormGroup,
-    Card,
-    CardBody,
-    Container,
-    Row,
-    Col,
-    FormSelect,
-    Button,
-  } from "shards-react";
-  import { getSpace, setSwifts, upVoteSwift, uploadToSkynet, compileCode } from "./services";
+import React from "react";
+import "./NewZap.css";
+import { verifyFile } from "./services/FileServices";
+import {
+  Form,
+  FormInput,
+  FormGroup,
+  Card,
+  CardBody,
+  Container,
+  Row,
+  Col,
+  FormSelect,
+  Button,
+} from "shards-react";
+import {
+  getSpace,
+  setSwifts,
+  upVoteSwift,
+  uploadToSkynet,
+  compileCode,
+} from "./services";
 
-  import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
-  export default class NewZap extends React.Component {
-    constructor(props) {
-      super(props);
+export default class NewZap extends React.Component {
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        name: "",
-        description: "",
-        parameters: [],
-        currentParamName: "",
-        currentParamType: "",
-        filereader: null,
-        skylink: null,
-        contractFile: null,
-        contractByteCode: null,
-        contractABI: null,
-      };
-
-      this.addSwift = this.addSwift.bind(this);
-      this.addParameter = this.addParameter.bind(this);
-      this.handleFileChosen = this.handleFileChosen.bind(this);
-    }
-
-    addParameter = async () => {
-      const parameter = {
-        paramName: this.state.currentParamName,
-        paramType: this.state.currentParamType,
-      };
-
-      const currentParams = this.state.parameters;
-      currentParams.push(parameter);
-      this.setState({ parameters: currentParams });
+    this.state = {
+      name: "",
+      description: "",
+      parameters: [],
+      currentParamName: "",
+      currentParamType: "",
+      filereader: null,
+      skylink: null,
+      contractFile: null,
+      contractByteCode: null,
+      contractABI: null,
     };
 
-    testUpload = async () => {
-      console.log('state is', this.state)
-      console.log('Uploading File to Skynet')
-      if(this.state.contractFile){
-        await uploadToSkynet(this.state.contractFile)
-      }
+    this.addSwift = this.addSwift.bind(this);
+    this.addParameter = this.addParameter.bind(this);
+    this.handleFileChosen = this.handleFileChosen.bind(this);
+  }
+
+  addParameter = async () => {
+    const parameter = {
+      paramName: this.state.currentParamName,
+      paramType: this.state.currentParamType,
+    };
+
+    const currentParams = this.state.parameters;
+    currentParams.push(parameter);
+    this.setState({ parameters: currentParams });
+  };
+
+  testUpload = async () => {
+    console.log("state is", this.state);
+    console.log("Uploading File to Skynet");
+    if (this.state.contractFile) {
+      await uploadToSkynet(this.state.contractFile);
     }
+  };
 
-    handleFileRead = (contractFile) => {
-      return new Promise((resolve, reject) => {
-        const fileReader = new FileReader()
-        fileReader.readAsText(contractFile)
+  handleFileRead = (contractFile) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsText(contractFile);
 
-        fileReader.onloadend = (e) => {
-          const content = fileReader.result;
-          var resp = verifyFile(content.toString());
-          const isCorrect = resp 
-          console.log('isCorrect', isCorrect)
-          if(isCorrect){
-            this.setState({ filereader: fileReader })
-          }
-          resolve(isCorrect)
+      fileReader.onloadend = (e) => {
+        const content = fileReader.result;
+        var resp = verifyFile(content.toString());
+        const isCorrect = resp;
+        console.log("isCorrect", isCorrect);
+        if (isCorrect) {
+          this.setState({ filereader: fileReader });
         }
-
-      })
-    };
-
-    handleFileChosen = async (e) => {
-      console.log('file', e.target.files[0])
-      const file = e.target.files[0]
-
-      const isCorrect = await this.handleFileRead(file)
-      console.log('filereader', this.state.filereader)
-      if(!isCorrect){
-        return
-      }
-
-      this.setState({ contractFile: file})
-    };
-
-    addSwift = async () => {
-      const space = await getSpace();
-
-      const swiftUUID = uuidv4()
-      let skylink
-
-      if(this.state.contractFile){
-        skylink = await uploadToSkynet(this.state.contractFile)
-      }
-
-      const swift = {
-        id: swiftUUID,
-        name: this.state.name,
-        description: this.state.description,
-        parameters: this.state.parameters,
-        voters: [],
-        upVotes: 0,
-        downVotes: 0,
-        contractSourceSkylink: skylink,
-        contractABI: this.state.contractABI,
-        contractByteCode: this.state.contractByteCode
+        resolve(isCorrect);
       };
+    });
+  };
 
-      await setSwifts(swift);
+  handleFileChosen = async (e) => {
+    console.log("file", e.target.files[0]);
+    const file = e.target.files[0];
+
+    const isCorrect = await this.handleFileRead(file);
+    console.log("filereader", this.state.filereader);
+    if (!isCorrect) {
+      return;
+    }
+
+    this.setState({ contractFile: file });
+  };
+
+  addSwift = async () => {
+    const space = await getSpace();
+
+    const swiftUUID = uuidv4();
+    let skylink;
+
+    if (this.state.contractFile) {
+      skylink = await uploadToSkynet(this.state.contractFile);
+    }
+
+    const swift = {
+      id: swiftUUID,
+      name: this.state.name,
+      description: this.state.description,
+      parameters: this.state.parameters,
+      voters: [],
+      upVotes: 0,
+      downVotes: 0,
+      contractSourceSkylink: skylink,
+      contractABI: this.state.contractABI,
+      contractByteCode: this.state.contractByteCode,
     };
+
+    await setSwifts(swift);
+  };
 
   render() {
     return (
@@ -144,6 +149,34 @@
                   <Row>
                     <Col>
                       <FormGroup>
+                        <label htmlFor="#bytecode">Contract ByteCode</label>
+                        <FormInput
+                          id="#description"
+                          placeholder="Contract Bytecode"
+                          onChange={(e) => {
+                            this.setState({ contractByteCode: e.target.value });
+                          }}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col>
+                      <FormGroup>
+                        <label htmlFor="#abi">Contract ABI</label>
+                        <FormInput
+                          id="#abi"
+                          placeholder="Contract ABI"
+                          onChange={(e) => {
+                            this.setState({ contractABI: e.target.value });
+                          }}
+                        />
+                      </FormGroup>
+                    </Col>{" "}
+                  </Row>{" "}
+                </Container>
+                <Container>
+                  <Row>
+                    <Col>
+                      <FormGroup>
                         <label htmlFor="#description">Description</label>
                         <FormInput
                           size="lg"
@@ -168,33 +201,10 @@
                           onChange={this.handleFileChosen}
                         />
                       </FormGroup>
-
-                      <FormGroup>
-                    <label htmlFor="#bytecode">Contract ByteCode</label>
-                    <FormInput
-                      size="lg"
-                      id="#description"
-                      placeholder="Contract Bytecode"
-                      onChange={(e) => {
-                        this.setState({ contractByteCode: e.target.value });
-                      }}
-                    />
-                  </FormGroup>
-
-                  <FormGroup>
-                    <label htmlFor="#abi">Contract ABI</label>
-                    <FormInput
-                      size="lg"
-                      id="#abi"
-                      placeholder="Contract ABI"
-                      onChange={(e) => {
-                        this.setState({ contractABI: e.target.value });
-                      }}
-                    />
-                  </FormGroup>
                     </Col>
                   </Row>
                 </Container>
+
                 <Container>
                   <Row>
                     <Col>
@@ -239,30 +249,34 @@
                     </Col>
                   </Row>
                 </Container>
-
-                {this.state.parameters.length < 0 ? (
-                  <div>No parameters Added</div>
-                ) : (
-                  <div>
-                    {this.state.parameters.map((param) => (
-                      <Card className="NewCard1">
-                        <CardBody>
-                          <Row className="Param">
-                            <Col>
-                              <h5>Parameter Name </h5>
-                              <h5>{param.paramName}</h5>
-                            </Col>
-                            <Col>
-                              <h5>Parameter Type</h5>
-                              <h5>{param.paramType}</h5>
-                            </Col>
-                          </Row>
-                        </CardBody>
-                      </Card>
-                    ))}
-                  </div>
-                )}
-
+                <Container>
+                  <Row>
+                    <div className="Parameter">
+                      {this.state.parameters.length < 0 ? (
+                        <div>No parameters Added</div>
+                      ) : (
+                        <div>
+                          {this.state.parameters.map((param) => (
+                            <div className="NewCard1">
+                              <Row className="Param">
+                                <Col>
+                                  <h5 className="ParamHeading">
+                                    Parameter Name{" "}
+                                  </h5>
+                                  <h5>{param.paramName}</h5>
+                                </Col>
+                                <Col>
+                                  <h5>Parameter Type</h5>
+                                  <h5>{param.paramType}</h5>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </Row>{" "}
+                </Container>
                 <center>
                   <Button
                     className="AddS"

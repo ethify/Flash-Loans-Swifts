@@ -46,6 +46,9 @@
 .main-container {
   margin-top: 5rem;
 }
+.UseButton {
+  margin-top: 5%;
+}
 .UseButton:hover {
   color: black;
 }

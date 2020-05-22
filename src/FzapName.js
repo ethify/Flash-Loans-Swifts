@@ -1,6 +1,7 @@
 import React from "react";
 import "./FzapName.css";
-import {deployContract} from "./services/Web3Services"
+import {deployContract,executeOperation} from "./services/Web3Services"
+import {getWeb3Instance} from "./services/index"
 import {
   CardBody,
   Card,
@@ -25,7 +26,8 @@ export default class FZapName extends React.Component {
       currentSwift: {
         parameters: []
       },
-      parametersInput: []
+      parametersInput: [],
+      contract:""
     }
 
     this.executeSwift = this.executeSwift.bind(this)
@@ -45,15 +47,30 @@ export default class FZapName extends React.Component {
   }
 
   async executeSwift() {
-    console.log('Executing Swift')
-    console.log(this.state)
+    var args =[]
+    this.state.currentSwift.parameters.map((param) =>args.push(this.state[param.paramName]))
+    const web3 = await getWeb3Instance();
+    var amt ="1";
+    //var args = ["0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",web3.utils.toWei(amt, "ether")]
+    const swiftID = this.props.match.params.swiftUUID
+    console.log(swiftID, 'swiftID');
+    const swift = await getSwift(swiftID)
+    const contractAddress = this.state.contract;
+    const tx= await executeOperation(contractAddress,swift.contractABI,args);
+    console.log(tx)
   }
   deploy= async() =>{
     const swiftID = this.props.match.params.swiftUUID
     console.log(swiftID, 'swiftID');
-
     const swift = await getSwift(swiftID)
-    deployContract(swift.contractByteCode, swift.contractABI)
+    var contract = await deployContract(swift.contractByteCode, swift.contractABI)
+    console.log("deployed",contract);
+    this.setState({contract : contract});
+  }
+  execute = async () => {
+    const contractAddress = this.state.contract;
+    const tx= await executeOperation(contractAddress);
+    console.log(tx)
   }
 
   render() {
@@ -70,8 +87,8 @@ export default class FZapName extends React.Component {
 
             <br/>
             <Button
-                                onClick={this.deploy}
-                              />
+              onClick={this.deploy}
+            />
             <Card className="FzapCard">
               <CardBody>
                 <Form>

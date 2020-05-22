@@ -92,7 +92,6 @@
 
     addSwift = async () => {
       const space = await getSpace();
-
       const swiftUUID = uuidv4()
       let skylink
 
@@ -112,7 +111,7 @@
         contractABI: this.state.contractABI,
         contractByteCode: this.state.contractByteCode
       };
-
+      
       await setSwifts(swift);
     };
 

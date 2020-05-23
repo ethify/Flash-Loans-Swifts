@@ -4,31 +4,32 @@
 .NavItem1 {
   margin-left: 5%;
 }
+
+.WalletButton {
+}
 .Nav {
-  width: 70rem;
+  width: 100%;
+  float: right;
 }
 .Link {
-  color: cyan;
+  color: #00b8d8;
   font-size: large;
 }
 .Link:hover {
   text-decoration: none;
   color: azure;
 }
-.address-blockie {
-  float: left;
+.HeadingWallet {
+  width: 130%;
 }
 
-.short-address {
-  float: right;
-}
-.NoWallet {
-  float: right;
-}
 .address-blockie {
   border-radius: 50%;
 }
 .navbar {
   background-color: black;
   color: white;
+}
+.NavIcon {
+  margin-right: 0.5rem;
 }

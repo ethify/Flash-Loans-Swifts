@@ -6,11 +6,10 @@
   width: 80%;
 }
 .NewCard1 {
-  width: 40%;
-  height: 3rem;
   margin-top: 3%;
+  width: 90%;
+  height: 20%;
   border: 2px solid #00b8d8;
-  box-shadow: 5px 5px #00b8d8;
 }
 
 .navbar {
@@ -24,7 +23,7 @@
   color: black;
 }
 .AddP {
-  margin-top: 9%;
+  margin-top: 13%;
   color: black;
 }
 .AddP:hover {
@@ -34,7 +33,7 @@
   color: black;
 }
 .AddS {
-  margin-top: 3%;
+  margin-top: 5%;
   align-content: center;
   color: #000;
   text-align: center;
@@ -53,4 +52,76 @@
 }
 .Parameter {
   width: 195%;
+}
+
+.Lable {
+  float: left;
+  color: #000;
+  font-weight: bolder;
+}
+.Card1 {
+  width: 60%;
+  margin-top: 3%;
+  border-color: #00b8d8;
+}
+.Span {
+}
+.Form1 {
+  display: flex;
+}
+.Name {
+  background-image: url("Name.png");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+.Address {
+  background-image: url("AddressCard.png");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+.Description {
+  background-image: url("description.png");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+.ByteCode {
+  background-image: url("FileSignature.png");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+.Abi {
+  background-image: url("FileContract.png");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+.Choose {
+  background-image: url("AddFile.webp");
+  background-repeat: no-repeat;
+  scroll-padding-right: 7;
+  background-size: 16px 18px;
+  background-position: 0.4% 50%;
+  background-attachment: scroll;
+}
+
+::placeholder {
+  padding-left: 1.5%;
+  color: #000;
+}
+.Icon1 {
+  padding-right: 2.5%;
 }

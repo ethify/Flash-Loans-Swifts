@@ -12,6 +12,7 @@ import {
   Col,
   FormSelect,
   Button,
+  FormTextarea,
 } from "shards-react";
 import {
   getSpace,
@@ -20,7 +21,19 @@ import {
   uploadToSkynet,
   compileCode,
 } from "./services";
-
+import {
+  faUser,
+  faAddressCard,
+  faFileInvoice,
+  faFileContract,
+  faFileSignature,
+  faFileAlt,
+  faServer,
+  faStickyNote,
+  faExternalLinkAlt,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
 
 export default class NewZap extends React.Component {
@@ -122,159 +135,176 @@ export default class NewZap extends React.Component {
   render() {
     return (
       <div>
-        <h4 className="Heading">Add New Zap</h4>
+        <h2 className="Heading">Add New Swift</h2>
         <center>
-          <Card className="NewCard">
+          <Card className="Card1">
             <CardBody>
               <Form>
-                <Container>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#name">Name</label>
-                        <FormInput
-                          className="Form"
-                          onChange={(e) => {
-                            this.setState({ name: e.target.value });
-                          }}
-                          placeholder="Name"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </Container>
-                <Container>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#bytecode">Contract ByteCode</label>
-                        <FormInput
-                          id="#description"
-                          placeholder="Contract Bytecode"
-                          onChange={(e) => {
-                            this.setState({ contractByteCode: e.target.value });
-                          }}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#abi">Contract ABI</label>
-                        <FormInput
-                          id="#abi"
-                          placeholder="Contract ABI"
-                          onChange={(e) => {
-                            this.setState({ contractABI: e.target.value });
-                          }}
-                        />
-                      </FormGroup>
-                    </Col>{" "}
-                  </Row>{" "}
-                </Container>
-                <Container>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#description">Description</label>
-                        <FormInput
-                          size="lg"
-                          id="#description"
-                          placeholder="Description"
-                          onChange={(e) => {
-                            this.setState({
-                              description: e.target.value,
-                            });
-                          }}
-                        />
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#choose">Choose</label>
-                        <FormInput
-                          type="file"
-                          id="file"
-                          className="input-file"
-                          accept=".sol"
-                          onChange={this.handleFileChosen}
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                </Container>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#name">
+                    Name
+                  </label>
 
-                <Container>
-                  <Row>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#parametername">Parameter Name</label>
-                        <FormInput
-                          onChange={(e) => {
-                            this.setState({ currentParamName: e.target.value });
-                          }}
-                          placeholder="Parameter Name"
-                        />
-                        ;
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <FormGroup>
-                        <label htmlFor="#type">Choose The Type</label>
-                        <FormSelect
-                          onChange={(e) => {
-                            this.setState({
-                              currentParamType: e.target.value,
-                            });
-                          }}
-                        >
-                          <option value="">Select Parameter Type</option>
-                          <option value="Address">Address</option>
-                          <option value="Int">Int</option>
-                          <option value="String">String </option>
-                        </FormSelect>
-                      </FormGroup>
-                    </Col>
-                    <Col>
-                      <Button
-                        className="AddP"
-                        outline
-                        pill
-                        theme="info"
-                        onClick={this.addParameter}
+                  <FormInput
+                    className="Name"
+                    onChange={(e) => {
+                      this.setState({ name: e.target.value });
+                    }}
+                    placeholder=" Name"
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#address">
+                    Adddress
+                  </label>
+                  <FormInput className="Address" placeholder="Address" />
+                </FormGroup>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#description">
+                    Description
+                  </label>
+                  <FormTextarea
+                    className="Description"
+                    id="#description"
+                    placeholder="Description"
+                    onChange={(e) => {
+                      this.setState({
+                        description: e.target.value,
+                      });
+                    }}
+                  />
+                </FormGroup>
+              </Form>
+            </CardBody>
+          </Card>
+        </center>
+        <center>
+          <Card className="Card1">
+            <CardBody>
+              <Form>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#bytecode">
+                    Contract ByteCode
+                  </label>
+                  <FormTextarea
+                    className="ByteCode"
+                    id="#contract"
+                    placeholder="Contract Bytecode"
+                    onChange={(e) => {
+                      this.setState({ contractByteCode: e.target.value });
+                    }}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#abi">
+                    Contract ABI
+                  </label>
+                  <FormTextarea
+                    className="Abi"
+                    id="#abi"
+                    placeholder="Contract ABI"
+                    onChange={(e) => {
+                      this.setState({ contractABI: e.target.value });
+                    }}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <label className="Lable" htmlFor="#choose">
+                    Choose
+                  </label>
+                  <FormInput
+                    className="Choose"
+                    type="file"
+                    id="file"
+                    className="input-file"
+                    accept=".sol"
+                    onChange={this.handleFileChosen}
+                  />
+                </FormGroup>
+              </Form>
+            </CardBody>
+          </Card>
+        </center>
+        <center>
+          <Card className="Card1">
+            <CardBody>
+              <Form>
+                <Row>
+                  <Col>
+                    <FormGroup>
+                      <label className="Lable" htmlFor="#parametername">
+                        Parameter Name
+                      </label>
+                      <FormInput
+                        className="PName"
+                        onChange={(e) => {
+                          this.setState({
+                            currentParamName: e.target.value,
+                          });
+                        }}
+                        placeholder="Parameter Name"
+                      />
+                      ;
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <FormGroup>
+                      <label className="Lable" htmlFor="#type">
+                        Choose The Type
+                      </label>
+                      <FormSelect
+                        onChange={(e) => {
+                          this.setState({
+                            currentParamType: e.target.value,
+                          });
+                        }}
                       >
-                        Add Parameter
-                      </Button>
-                    </Col>
-                  </Row>
-                </Container>
-                <Container>
-                  <Row>
-                    <div className="Parameter">
-                      {this.state.parameters.length < 0 ? (
-                        <div>No parameters Added</div>
-                      ) : (
-                        <div>
-                          {this.state.parameters.map((param) => (
-                            <div className="NewCard1">
-                              <Row className="Param">
-                                <Col>
-                                  <h5 className="ParamHeading">
-                                    Parameter Name{" "}
-                                  </h5>
-                                  <h5>{param.paramName}</h5>
-                                </Col>
-                                <Col>
-                                  <h5>Parameter Type</h5>
-                                  <h5>{param.paramType}</h5>
-                                </Col>
-                              </Row>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </Row>{" "}
-                </Container>
+                        <option value="" className="Select">
+                          Select Parameter Type
+                        </option>
+                        <option value="Address">Address</option>
+                        <option value="Int">Int</option>
+                        <option value="String">String </option>
+                      </FormSelect>
+                    </FormGroup>
+                  </Col>
+                  <Col>
+                    <Button
+                      className="AddP"
+                      outline
+                      pill
+                      theme="info"
+                      onClick={this.addParameter}
+                    >
+                      <FontAwesomeIcon className="Icon1" icon={faStickyNote} />
+                      Add Parameter
+                    </Button>
+                  </Col>
+                </Row>
+                {this.state.parameters.length < 0 ? (
+                  <div>No parameters Added</div>
+                ) : (
+                  <div>
+                    {this.state.parameters.map((param) => (
+                      <div className="NewCard1">
+                        <Row>
+                          <Col>
+                            <h5 className="ParamHeading">
+                              Parameter Name -{" "}
+                              <span className="Span"> {param.paramName} </span>{" "}
+                            </h5>
+                          </Col>
+                          <Col>
+                            <h5>
+                              Parameter Type -{" "}
+                              <span className="Span">{param.paramType}</span>{" "}
+                            </h5>
+                          </Col>
+                        </Row>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <center>
                   <Button
                     className="AddS"
@@ -283,11 +313,12 @@ export default class NewZap extends React.Component {
                     theme="info"
                     onClick={this.addSwift}
                   >
+                    <FontAwesomeIcon className="Icon1" icon={faPlus} />
                     Add Swift
                   </Button>
                 </center>
               </Form>
-            </CardBody>{" "}
+            </CardBody>
           </Card>
         </center>
       </div>

@@ -17,7 +17,8 @@ import {
   Col,
 } from "shards-react";
 import GridLoader from "react-spinners/GridLoader";
-
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Home.css";
 
 import {
@@ -82,7 +83,10 @@ export default class Home extends React.Component {
                     <div>
                       <Col sm="12" md="4" lg="3">
                         <Card className="Card">
-                          <CardHeader className="CardHeader">FZap</CardHeader>
+                          <center>
+                            {" "}
+                            <CardHeader className="CardHeader">FZap</CardHeader>
+                          </center>
                           <center>
                             <CardBody>
                               <CardTitle className="CardTitle">
@@ -101,7 +105,7 @@ export default class Home extends React.Component {
                                     className="UpVote"
                                     onClick={this.upVoteSwift}
                                   >
-                                    &uarr;
+                                    <FontAwesomeIcon icon={faThumbsUp} />
                                   </button>
                                 </div>
                                 <span className="UpNumber">
@@ -114,7 +118,7 @@ export default class Home extends React.Component {
                                     className="DownVote"
                                     onClick={this.downVoteSwift}
                                   >
-                                    &darr;
+                                    <FontAwesomeIcon icon={faThumbsDown} />
                                   </button>
                                 </div>
                                 <span className="DownNumber">
@@ -134,7 +138,7 @@ export default class Home extends React.Component {
                                   );
                                 }}
                               >
-                                Use This
+                                Use This &rarr;
                               </Button>
                             </CardBody>
                           </center>
@@ -148,7 +152,7 @@ export default class Home extends React.Component {
                       {" "}
                       <GridLoader
                         size={10}
-                        color={"#00FFFF"}
+                        color={"#00b8d8"}
                         loading={this.state.buyingPoolToken}
                       />
                     </center>

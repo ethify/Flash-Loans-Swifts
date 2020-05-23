@@ -4,6 +4,38 @@
 .FzapCard {
   width: 80%;
 }
+.NavLink {
+  color: black;
+  font-size: larger;
+}
 .Inline {
   display: inline-block;
+  margin-top: 8%;
+  margin-left: 36%;
+  color: black;
+}
+.Inline2 {
+  display: inline-block;
+  margin-top: 8%;
+  margin-left: 16%;
+  color: black;
+}
+.Inline1 {
+  margin-top: 5%;
+}
+.Tabs {
+  margin-left: 10%;
+}
+.TabDiv {
+  margin-left: 9%;
+  margin-top: 7%;
+}
+.UseCard {
+  margin-top: 3%;
+}
+.ButtonUse {
+  color: black;
+}
+.UseIcon {
+  padding-right: 1%;
 }

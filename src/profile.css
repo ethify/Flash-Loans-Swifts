@@ -1,0 +1,23 @@
+.Avatar {
+  width: 60%;
+  margin-top: 7%;
+  height: 45%;
+  margin-left: 3%;
+  border-radius: 50%;
+}
+.ProfileCard {
+  width: 35%;
+  height: 25rem;
+}
+.NameTitle {
+  margin-top: 10%;
+}
+.AddressTitle {
+  margin-top: 10%;
+}
+.LearnButton {
+  margin-top: 10%;
+}
+.Div1 {
+  margin-top: 14%;
+}

@@ -26,16 +26,15 @@
   margin-left: 7%;
 }
 .UpVote {
-  color: black;
+  color: rgb(2, 2, 59);
   display: inline-block;
-  background-color: rgb(119, 221, 119);
 }
 .UpVote:active {
-  border-color: aqua;
+  border-color: #00b8d8;
 }
 .DownVote {
+  color: rgb(2, 2, 59);
   display: inline-block;
-  background-color: rgb(247, 113, 113);
 }
 .UpNumber {
   margin-left: 3%;
@@ -48,7 +47,13 @@
 }
 .UseButton {
   margin-top: 5%;
+  color: black;
+  font-size: large;
 }
 .UseButton:hover {
   color: black;
+}
+.Icon {
+  color: black;
+  background-color: black;
 }

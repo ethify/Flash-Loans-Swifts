@@ -8,10 +8,20 @@ import {
   NavItem,
   NavLink,
   Collapse,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
   Button,
+  FormInput,
 } from "shards-react";
 import makeBlockie from "ethereum-blockies-base64";
-
+import {
+  faHome,
+  faPlus,
+  faUserCircle,
+  faWallet,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./NavBar.css";
 import { getAccount, getWeb3Instance, defaultAddress } from "./services";
 
@@ -81,17 +91,25 @@ export default class NavBar extends React.Component {
             <Nav navbar className="Nav">
               <NavItem className="NavItem">
                 <Link className="Link" to="/">
-                  Flash Zap
+                  <FontAwesomeIcon icon={faHome} className="NavIcon" />
+                  Home
                 </Link>
               </NavItem>
               <NavItem className="NavItem1">
                 <Link className="Link" to="/new-zap">
+                  <FontAwesomeIcon icon={faPlus} className="NavIcon" />
                   Add New
+                </Link>
+              </NavItem>
+              <NavItem className="NavItem1">
+                <Link className="Link" to="/profile">
+                  <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
+                  Dashboard
                 </Link>
               </NavItem>
             </Nav>
 
-            <Nav navbar className="Nav">
+            <Nav navbar className="ml-auto">
               <NavItem className="NavItem">
                 <Button outline pill theme="info" onClick={this.getWeb3}>
                   {this.state.userAddress ? (
@@ -107,7 +125,11 @@ export default class NavBar extends React.Component {
                       </span>
                     </div>
                   ) : (
-                    <div>No Wallet Connected</div>
+                    <div>
+                      {" "}
+                      <FontAwesomeIcon icon={faWallet} className="NavIcon" />
+                      No Wallet Connected
+                    </div>
                   )}
                 </Button>
               </NavItem>

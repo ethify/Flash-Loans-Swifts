@@ -31,6 +31,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getSwift } from "./services";
+import * as BigNumber from 'bignumber.js'
+import makeBlockie from "ethereum-blockies-base64";
+import { getShortAddress } from './services/utils'
 
 export default class FZapName extends React.Component {
   constructor(props) {
@@ -43,11 +46,12 @@ export default class FZapName extends React.Component {
         parameters: [],
       },
       parametersInput: [],
-      currentTab: "",
+      currentTab: "Summary",
       contract: "",
     };
 
     this.executeSwift = this.executeSwift.bind(this);
+    this.withdrawAsset = this.withdrawAsset.bind(this);
     this.deploy = this.deploy.bind(this);
   }
 
@@ -63,24 +67,29 @@ export default class FZapName extends React.Component {
     this.setState({ currentSwift: swift, currentSwiftID: swiftID });
   }
 
-  async executeSwift() {
+  executeSwift = async () => {
     var args = [];
     this.state.currentSwift.parameters.map(async (param) => {
-      if (param.paramName == "amount") {
-        const web3 = new Web3();
-        var amt = web3.utils.toWei(this.state[param.paramName], "ether");
+
+      if (param.paramType ==+ "AssetAmount") {
+        const amt = new BigNumber(this.state[param.paramName])
         args.push(amt);
       } else {
         args.push(this.state[param.paramName]);
       }
+
     });
+
     console.log(args);
+
     const web3 = await getWeb3Instance();
-    var amt = "1";
-    var args = [
-      "0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",
-      web3.utils.toWei(amt, "ether"),
-    ];
+
+    // var amt = "1";
+    // var args = [
+    //   "0xf80A32A835F79D7787E8a8ee5721D0fEaFd78108",
+    //   web3.utils.toWei(amt, "ether"),
+    // ];
+    
     const swiftID = this.props.match.params.swiftUUID;
     console.log(swiftID, "swiftID");
     const swift = await getSwift(swiftID);
@@ -88,6 +97,7 @@ export default class FZapName extends React.Component {
     const tx = await executeOperation(contractAddress, swift.contractABI, args);
     console.log(tx);
   }
+
   deploy = async () => {
     const swiftID = this.props.match.params.swiftUUID;
     console.log(swiftID, "swiftID");
@@ -98,7 +108,8 @@ export default class FZapName extends React.Component {
     );
     console.log("deployed", contract);
     this.setState({ contract: contract });
-  };
+  }
+
   withdrawAsset = async () => {
     const swiftID = this.props.match.params.swiftUUID;
     console.log(swiftID, "swiftID");
@@ -110,7 +121,7 @@ export default class FZapName extends React.Component {
       this.state.asset
     );
     console.log(tx);
-  };
+  }
 
   render() {
     return (
@@ -120,10 +131,6 @@ export default class FZapName extends React.Component {
             <Col sm="12" md="4" lg="3">
               <Card className="Card">
                 <center>
-                  {" "}
-                  <CardHeader className="CardHeader">FZap</CardHeader>
-                </center>
-                <center>
                   <CardBody>
                     <CardTitle className="CardTitle">
                       {this.state.currentSwift.name}
@@ -131,7 +138,31 @@ export default class FZapName extends React.Component {
                     <p className="CardDescription">
                       {this.state.currentSwift.description}
                     </p>
-                    <CardTitle className="CardTitle2">DevAddress</CardTitle>
+                    <br />
+                              Made By
+                              {this.state.currentSwift.rewardFeeAddress ? (
+                              <div>
+                                <img
+                                  src={makeBlockie(this.state.currentSwift.rewardFeeAddress)}
+                                  alt="address blockie"
+                                  className="address-blockie"
+                                  width="15"
+                                />
+                                <span className="short-address">
+                                  {getShortAddress(this.state.currentSwift.rewardFeeAddress)}
+                                </span>
+                              </div>) : (<div>
+                                <img
+                                  src={makeBlockie('0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b')}
+                                  alt="address blockie"
+                                  className="address-blockie"
+                                  width="15"
+                                />
+                                <span className="short-address">
+                                  {getShortAddress('0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b')}
+                                </span>
+                              </div>)}
+                              <br />
                     <div>
                       <div className="Votes1">
                         <button
@@ -166,9 +197,7 @@ export default class FZapName extends React.Component {
                       theme="info"
                       className="UseButton"
                       name={this.state.currentSwift.id}
-                      onClick={(e) => {
-                        this.props.history.push("/swift/" + e.target.name);
-                      }}
+                      onClick={(e) => { this.setState({ currentTab: "UseNow"}) }}
                     >
                       Use This &rarr;
                     </Button>
@@ -236,21 +265,17 @@ export default class FZapName extends React.Component {
                   <div className="TabDiv">
                     <h5>Description</h5>
                     <p>
-                      Lorem Ipsum is simply dummy text of the printing and
-                      typesetting industry. Lorem Ipsum has been the industry's
-                      standard dummy text ever since the 1500s, when an unknown
-                      printer took a galley of type and scrambled it to make a
-                      type specimen book.{" "}
+                      {this.state.currentSwift.description}
                     </p>
                   </div>
                 ) : null}
                 {this.state.currentTab === "Stats" ? (
                   <div className="TabDiv">
                     <h4>
-                      Total Upvotes <FontAwesomeIcon icon={faThumbsUp} /> :
+                      Total Upvotes <FontAwesomeIcon icon={faThumbsUp} /> : {this.state.currentSwift.upVotes}
                     </h4>
                     <h4>
-                      Total Downvotes <FontAwesomeIcon icon={faThumbsDown} /> :
+                      Total Downvotes <FontAwesomeIcon icon={faThumbsDown} /> : {this.state.currentSwift.downVotes}
                     </h4>
                   </div>
                 ) : null}
@@ -266,6 +291,7 @@ export default class FZapName extends React.Component {
                             outline
                             pill
                             theme="info"
+                            onClick={this.deploy}
                           >
                             <FontAwesomeIcon
                               className="UseIcon"
@@ -278,9 +304,9 @@ export default class FZapName extends React.Component {
                     </Card>
                     <Card className="UseCard">
                       <CardBody>
-                        <CardTitle>Card Title</CardTitle>
-                        Nunc quis nisl ac justo elementum sagittis in quis
-                        justo.
+                        <CardTitle>Transfer Ownerships / Assets to Contract</CardTitle>
+                        Please perform all Post Flash Loan execution operations necessary for the transaction to run successfully. 
+                        These might be mentioned in the description of the swift
                       </CardBody>
                     </Card>
                     <Card className="UseCard">
@@ -350,7 +376,7 @@ export default class FZapName extends React.Component {
                             <label htmlFor="#withdraw">Withdraw Asset</label>
                             <FormInput
                               id="#username"
-                              placeholder="Asset Holder"
+                              placeholder="Asset Address"
                             />
                           </FormGroup>
                         </Form>

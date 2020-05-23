@@ -15,11 +15,16 @@ import {
   Container,
   Row,
   Col,
+  CardFooter
 } from "shards-react";
 import GridLoader from "react-spinners/GridLoader";
 import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Home.css";
+
+import makeBlockie from "ethereum-blockies-base64";
+
+import { getShortAddress } from './services/utils'
 
 import {
   getSwifts,
@@ -56,13 +61,13 @@ export default class Home extends React.Component {
     }
   }
 
-  async downVoteSwift(e) {
-    const newSwifts = await downVoteSwift(e.target.value);
+  async downVoteSwift(swiftID) {
+    const newSwifts = await downVoteSwift(swiftID);
     this.setState({ swift: newSwifts });
   }
 
-  async upVoteSwift(e) {
-    const newSwifts = await upVoteSwift(e.target.value);
+  async upVoteSwift(swiftID) {
+    const newSwifts = await upVoteSwift(swiftID);
     this.setState({ swift: newSwifts });
   }
 
@@ -84,26 +89,42 @@ export default class Home extends React.Component {
                       <Col sm="12" md="4" lg="3">
                         <Card className="Card">
                           <center>
-                            {" "}
-                            <CardHeader className="CardHeader">FZap</CardHeader>
-                          </center>
-                          <center>
-                            <CardBody>
+                            <CardBody className="CardBody">
                               <CardTitle className="CardTitle">
                                 {swift.name}
                               </CardTitle>
                               <p className="CardDescription">
                                 {swift.description}
                               </p>
-                              <CardTitle className="CardTitle2">
-                                DevAddress
-                              </CardTitle>
+                              <br />
+                              Made By
+                              {swift.rewardFeeAddress ? (
+                              <div>
+                                <img
+                                  src={makeBlockie(swift.rewardFeeAddress)}
+                                  alt="address blockie"
+                                  className="address-blockie"
+                                  width="15"
+                                />
+                                <span className="short-address">
+                                  {getShortAddress(swift.rewardFeeAddress)}
+                                </span>
+                              </div>) : (<div>
+                                <img
+                                  src={makeBlockie('0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b')}
+                                  alt="address blockie"
+                                  className="address-blockie"
+                                  width="15"
+                                />
+                                <span className="short-address">
+                                  {getShortAddress('0x22d491Bde2303f2f43325b2108D26f1eAbA1e32b')}
+                                </span>
+                              </div>)}
+                              <br />
                               <div>
                                 <div className="Votes1">
                                   <button
-                                    value={swift.id}
-                                    className="UpVote"
-                                    onClick={this.upVoteSwift}
+                                    onClick={e => this.upVoteSwift(swift.id)}
                                   >
                                     <FontAwesomeIcon icon={faThumbsUp} />
                                   </button>
@@ -114,9 +135,7 @@ export default class Home extends React.Component {
 
                                 <div className="Votes2">
                                   <button
-                                    value={swift.id}
-                                    className="DownVote"
-                                    onClick={this.downVoteSwift}
+                                    onClick={e => this.downVoteSwift(swift.id)}
                                   >
                                     <FontAwesomeIcon icon={faThumbsDown} />
                                   </button>
@@ -126,6 +145,8 @@ export default class Home extends React.Component {
                                 </span>
                               </div>
                               <br />
+                            </CardBody>
+                            <CardFooter className="CardFooter">
                               <Button
                                 outline
                                 pill
@@ -140,24 +161,24 @@ export default class Home extends React.Component {
                               >
                                 Use This &rarr;
                               </Button>
-                            </CardBody>
+                            </CardFooter>
                           </center>
                         </Card>
                       </Col>
                     </div>
                   ))
                 ) : (
-                  <Col>
-                    <center>
-                      {" "}
-                      <GridLoader
-                        size={10}
-                        color={"#00b8d8"}
-                        loading={this.state.buyingPoolToken}
-                      />
-                    </center>
-                  </Col>
-                )}{" "}
+                    <Col>
+                      <center>
+                        {" "}
+                        <GridLoader
+                          size={10}
+                          color={"#00b8d8"}
+                          loading={this.state.buyingPoolToken}
+                        />
+                      </center>
+                    </Col>
+                  )}{" "}
               </Row>
             </div>
           </Container>

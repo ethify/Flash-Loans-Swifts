@@ -83,7 +83,7 @@ export const setSwifts = async (swiftData) => {
     console.log('swifts', swifts)
 
     swifts.push(swiftData)
-    space.public.set('swiftsLists', swifts)
+    await space.public.set('swiftsLists', swifts)
 
     const newSwifts = await getSwifts()
     console.log('now Swifts', newSwifts)
@@ -99,6 +99,7 @@ export const updateSwifts = async (newSwifts) => {
 }
 
 export const upVoteSwift = async (swiftID) => {
+    console.log(swiftID, 'swiftID')
     let currentSwifts = await getSwifts()
 
     const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
@@ -130,6 +131,7 @@ export const upVoteSwift = async (swiftID) => {
 }
 
 export const downVoteSwift = async (swiftID) => {
+    console.log(swiftID, 'swiftID')
     let currentSwifts = await getSwifts()
 
     const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
@@ -217,3 +219,50 @@ export const uploadToSkynet = async (file) => {
 //             })
 //     })
 // }
+
+
+export const getProfiles = async () => {
+    if (!space) {
+        await get3BoxInstance()
+        await getSpace()
+    }
+    const profiles = await space.public.get('profileList')
+    console.log('Got from profiles spcae',profiles)
+    return profiles
+}
+
+export const getProfile = async (address) => {
+    const allProfiles = await getProfiles()
+    console.log('All Profiles', allProfiles)
+    const profile = allProfiles.find((profile) => profile.address === address)
+    console.log('profile', profile)
+    return profile
+}
+
+export const setProfiles = async (profileData) => {
+    let profiles = []
+
+    profiles = await getProfiles()
+
+    if (profiles == undefined) {
+        profiles = []
+    }
+
+    console.log('profiles', profiles)
+
+    profiles.push(profileData)
+    console.log('Now new profiles', profiles)
+    await space.public.set('profileList', profiles)
+
+    const newProfiles = await getProfiles()
+    console.log('now Profiles', newProfiles)
+}
+
+export const updateProfiles = async (newProfiles) => {
+    space.public.set('swiftsLists', newProfiles)
+
+    const newUpdatedProfiles = await  getProfiles()
+    console.log('now Updated Swifts', newUpdatedProfiles)
+
+    return newUpdatedProfiles
+}

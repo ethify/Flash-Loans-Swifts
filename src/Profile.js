@@ -24,7 +24,38 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./profile.css";
 import { Route } from "react-router-dom";
+
+import { getShortAddress } from './services/utils'
+import { getProfile, setProfiles } from "./services";
+
 export default class Profile extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      userAddress: '',
+      userProfile: {}
+    }
+  }
+
+  async componentDidMount() {
+    const userAddress = this.props.match.params.userAddress
+    const userProfile = await getProfile(userAddress)
+    this.setState({ userAddress, userProfile})
+  }
+
+  async testButton() {
+    const newUserProfile = {
+      address: this.state.userAddress,
+      totalUpVotes: 0,
+      totalDownVotes: 0,
+      totalZapsCreated: 1
+    }
+    console.log(newUserProfile, 'newUserProfile')
+    const newProfiles = await setProfiles(newUserProfile)
+    console.log('new Profiles', newProfiles)
+  }
+
   render() {
     return (
       <div>
@@ -37,7 +68,7 @@ export default class Profile extends React.Component {
                   <Col>
                     <CardImg className="Avatar" src={Avatar} />
                     <CardTitle className="NameTitle">Name</CardTitle>
-                    <h5 className="AddressTitle">My Address</h5>
+                      <p className="AddressTitle">Address: {getShortAddress(this.state.userAddress)}</p>
                     <Button outline pill theme="info" className="LearnButton">
                       Learn More &rarr;
                     </Button>
@@ -45,19 +76,19 @@ export default class Profile extends React.Component {
                   <Col>
                     <center>
                       <div className="Div1">
-                        <h4>30</h4>
+                        <h4>{this.state.userProfile.totalZapsCreated}</h4>
                         <h6>
                           Swifts <FontAwesomeIcon icon={faAddressCard} />{" "}
                         </h6>
                       </div>
                       <div className="Div1">
-                        <h4>20</h4>
+                        <h4>{this.state.userProfile.totalUpVotes}</h4>
                         <h6>
                           UpVotes <FontAwesomeIcon icon={faThumbsUp} />
                         </h6>
                       </div>
                       <div className="Div1">
-                        <h4>10</h4>
+                      <h4>{this.state.userProfile.totalDownVotes}</h4>
                         <h6>
                           DownVotes <FontAwesomeIcon icon={faThumbsDown} />
                         </h6>

@@ -8,7 +8,6 @@
 }
 .Card {
   width: 20rem;
-  height: 23rem;
   margin-bottom: 2rem;
 }
 .CardDescription {
@@ -49,6 +48,7 @@
   margin-top: 5%;
   color: black;
   font-size: large;
+  margin-bottom: 10px;
 }
 .UseButton:hover {
   color: black;
@@ -56,4 +56,13 @@
 .Icon {
   color: black;
   background-color: black;
+}
+
+.CardBody {
+  min-height: 19rem;
+}
+
+.CardFooter {
+  background: white;
+  border-top: solid 1px cyan;
 }

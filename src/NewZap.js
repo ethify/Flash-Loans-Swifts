@@ -20,6 +20,10 @@ import {
   upVoteSwift,
   uploadToSkynet,
   compileCode,
+  getProfile,
+  defaultAddress,
+  setProfiles,
+  updateProfiles
 } from "./services";
 import {
   faUser,
@@ -51,6 +55,7 @@ export default class NewZap extends React.Component {
       contractFile: null,
       contractByteCode: null,
       contractABI: null,
+      rewardFeeAddress: ''
     };
 
     this.addSwift = this.addSwift.bind(this);
@@ -127,14 +132,33 @@ export default class NewZap extends React.Component {
       contractSourceSkylink: skylink,
       contractABI: this.state.contractABI,
       contractByteCode: this.state.contractByteCode,
+      rewardFeeAddress: this.state.rewardFeeAddress
     };
+
+    const userAddress = await defaultAddress()
+    let userProfile = await getProfile(userAddress)
+
+    if(!userProfile) {
+      const newUserProfile = {
+        address: userAddress,
+        totalUpVotes: 0,
+        totalDownVotes: 0,
+        totalZapsCreated: 1
+      }
+
+      await setProfiles(newUserProfile)
+    } else {
+      userProfile.totalZapsCreated = userProfile.totalZapsCreated++
+      const updatedProfiles = await updateProfiles(userProfile)
+      console.log('Successfully Updated')
+    }
 
     await setSwifts(swift);
   };
 
   render() {
     return (
-      <div>
+      <div className="main-container">
         <h2 className="Heading">Add New Swift</h2>
         <center>
           <Card className="Card1">
@@ -155,9 +179,11 @@ export default class NewZap extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <label className="Lable" htmlFor="#address">
-                    Adddress
+                    Reward Fee Address
                   </label>
-                  <FormInput className="Address" placeholder="Address" />
+                  <FormInput className="Address" placeholder="Reward Fee Address" onChange={(e) =>
+                    this.setState({ rewardFeeAddress: e.target.value })
+                  } />
                 </FormGroup>
                 <FormGroup>
                   <label className="Lable" htmlFor="#description">
@@ -265,6 +291,7 @@ export default class NewZap extends React.Component {
                         <option value="Address">Address</option>
                         <option value="Int">Int</option>
                         <option value="String">String </option>
+                        <option value="AssetAmount">Amount of Asset</option>
                       </FormSelect>
                     </FormGroup>
                   </Col>
@@ -284,27 +311,25 @@ export default class NewZap extends React.Component {
                 {this.state.parameters.length < 0 ? (
                   <div>No parameters Added</div>
                 ) : (
-                  <div>
-                    {this.state.parameters.map((param) => (
-                      <div className="NewCard1">
-                        <Row>
-                          <Col>
-                            <h5 className="ParamHeading">
-                              Parameter Name -{" "}
-                              <span className="Span"> {param.paramName} </span>{" "}
-                            </h5>
-                          </Col>
-                          <Col>
-                            <h5>
-                              Parameter Type -{" "}
-                              <span className="Span">{param.paramType}</span>{" "}
-                            </h5>
-                          </Col>
-                        </Row>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                    <div>
+                      {this.state.parameters.map((param) => (
+                        <div className="NewCard1">
+                          <Row>
+                            <Col>
+                              <h5 className="ParamHeading">
+                                <span className="Span"> {param.paramName} </span>{" "}
+                              </h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                <span className="Span">{param.paramType}</span>{" "}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 <center>
                   <Button
                     className="AddS"

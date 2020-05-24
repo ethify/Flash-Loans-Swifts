@@ -102,14 +102,12 @@ export default class NavBar extends React.Component {
               </NavItem>
               {
                 this.state.userAddress ? (
-                  <div>
                     <NavItem className="NavItem1">
                       <Link className="Link" to={"/profile/" + this.state.userAddress}>
                         <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
                   Dashboard
                 </Link>
                     </NavItem>
-                  </div>
                 ) : null
               }
             </Nav>

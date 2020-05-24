@@ -2,74 +2,93 @@
   text-align: center;
   margin-top: 2%;
   color: #212529;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .NewCard {
   width: 80%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .NewCard1 {
   margin-top: 3%;
   width: 75%;
   height: 20%;
   border: 2px solid #00b8d8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .navbar {
   box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.160784);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Create {
   margin-top: 3%;
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Button {
   color: rgb(46, 26, 26);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .AddP {
   margin-top: 13%;
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .AddP:hover {
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .AddS:hover {
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .AddS {
   margin-top: 5%;
   align-content: center;
   color: #000;
   text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .NewCard {
   margin-bottom: 3%;
   width: 90%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Form:active {
   border-color: cyan;
   box-shadow: 10px 10px 10px 10px black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Param {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .ParamHeading {
-
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Parameter {
   width: 195%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .Lable {
   float: left;
   color: #000;
   font-weight: bolder;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
+
 .Card1 {
   width: 60%;
   margin-top: 3%;
   border-color: #00b8d8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Span {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Form1 {
   display: flex;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Name {
   background-image: url("Name.png");
@@ -78,6 +97,7 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Address {
   background-image: url("AddressCard.png");
@@ -86,6 +106,7 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Description {
   background-image: url("description.png");
@@ -94,6 +115,7 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .ByteCode {
   background-image: url("FileSignature.png");
@@ -102,6 +124,7 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Abi {
   background-image: url("FileContract.png");
@@ -110,6 +133,7 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Choose {
   background-image: url("AddFile.webp");
@@ -118,11 +142,13 @@
   background-size: 16px 18px;
   background-position: 0.4% 50%;
   background-attachment: scroll;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 ::placeholder {
   padding-left: 1.5%;
   color: #000;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Icon1 {
   padding-right: 2.5%;
@@ -133,4 +159,5 @@
   z-index: 1;
   top: 0;
   width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

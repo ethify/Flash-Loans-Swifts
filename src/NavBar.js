@@ -100,12 +100,18 @@ export default class NavBar extends React.Component {
                   Add New
                 </Link>
               </NavItem>
-              <NavItem className="NavItem1">
-                <Link className="Link" to={"/profile/" + this.state.userAddress}>
-                  <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
+              {
+                this.state.userAddress ? (
+                  <div>
+                    <NavItem className="NavItem1">
+                      <Link className="Link" to={"/profile/" + this.state.userAddress}>
+                        <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
                   Dashboard
                 </Link>
-              </NavItem>
+                    </NavItem>
+                  </div>
+                ) : null
+              }
             </Nav>
 
             <Nav navbar className="ml-auto">
@@ -124,12 +130,12 @@ export default class NavBar extends React.Component {
                       </span>
                     </div>
                   ) : (
-                    <div>
-                      {" "}
-                      <FontAwesomeIcon icon={faWallet} className="NavIcon" />
+                      <div>
+                        {" "}
+                        <FontAwesomeIcon icon={faWallet} className="NavIcon" />
                       No Wallet Connected
-                    </div>
-                  )}
+                      </div>
+                    )}
                 </Button>
               </NavItem>
             </Nav>

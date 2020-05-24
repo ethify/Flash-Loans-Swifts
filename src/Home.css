@@ -46,9 +46,10 @@
 }
 .UseButton {
   margin-top: 5%;
-  color: black;
+  color: #222222;
   font-size: large;
   margin-bottom: 10px;
+  border: 2px solid cyan;
 }
 .UseButton:hover {
   color: black;
@@ -63,6 +64,7 @@
 }
 
 .CardFooter {
+  /* background: #222222; */
   background: white;
-  border-top: solid 1px cyan;
+  border-top: solid 4px cyan;
 }

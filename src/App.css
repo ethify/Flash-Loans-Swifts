@@ -1,9 +1,6 @@
 .App {
   text-align: center;
 }
-.MainContainer {
-  width: 95rem;
-}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

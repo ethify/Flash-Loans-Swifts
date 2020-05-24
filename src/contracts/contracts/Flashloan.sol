@@ -1,7 +1,5 @@
 pragma solidity ^0.6.6;
 
-
-
 contract Flashloan is FlashLoanReceiverBase {
     address public zapper;
     address public fzap;

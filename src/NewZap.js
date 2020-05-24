@@ -13,6 +13,7 @@ import {
   FormSelect,
   Button,
   FormTextarea,
+  Alert
 } from "shards-react";
 import {
   getSpace,
@@ -23,7 +24,8 @@ import {
   getProfile,
   defaultAddress,
   setProfiles,
-  updateProfiles
+  updateProfiles,
+  getProfiles
 } from "./services";
 import {
   faUser,
@@ -39,6 +41,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
+import TransactionModal from './Modal'
 
 export default class NewZap extends React.Component {
   constructor(props) {
@@ -55,12 +58,23 @@ export default class NewZap extends React.Component {
       contractFile: null,
       contractByteCode: null,
       contractABI: null,
-      rewardFeeAddress: ''
+      rewardFeeAddress: '',
+      open: false,
+      currentStatus: null,
+      modalContent: '',
+      showAlert: false
     };
 
     this.addSwift = this.addSwift.bind(this);
     this.addParameter = this.addParameter.bind(this);
     this.handleFileChosen = this.handleFileChosen.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle = () => {
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   addParameter = async () => {
@@ -113,12 +127,25 @@ export default class NewZap extends React.Component {
   };
 
   addSwift = async () => {
+    if (!this.state.contractFile) {
+      this.setState({ showAlert: true })
+      return
+    } else {
+      this.setState({ showAlert: false })
+    }
+    const userAddress = await defaultAddress()
+    this.toggle()
+    this.setState({ currentStatus: "inProgress", modalContent: "Adding Your Swift...Please Wait" })
     const space = await getSpace();
     const swiftUUID = uuidv4();
     let skylink;
 
     if (this.state.contractFile) {
       skylink = await uploadToSkynet(this.state.contractFile);
+      if (skylink === 'error') {
+        this.setState({ currentStatus: "failed", modalContent: "Adding Swift Failed! Please Try Again" })
+        return
+      }
     }
 
     const swift = {
@@ -135,30 +162,40 @@ export default class NewZap extends React.Component {
       rewardFeeAddress: this.state.rewardFeeAddress
     };
 
-    const userAddress = await defaultAddress()
     let userProfile = await getProfile(userAddress)
 
-    if(!userProfile) {
+    if (!userProfile) {
       const newUserProfile = {
         address: userAddress,
         totalUpVotes: 0,
         totalDownVotes: 0,
-        totalZapsCreated: 1
+        totalSwiftsCreated: 1,
+        userDeployedSwifts: []
       }
 
       await setProfiles(newUserProfile)
     } else {
-      userProfile.totalZapsCreated = userProfile.totalZapsCreated++
+      userProfile.totalSwiftsCreated = userProfile.totalSwiftsCreated++
       const updatedProfiles = await updateProfiles(userProfile)
       console.log('Successfully Updated')
     }
 
     await setSwifts(swift);
+    this.setState({ currentStatus: "done", modalContent: "Swift Successfully Added" })
   };
 
   render() {
     return (
       <div className="main-container">
+        {
+          this.state.showAlert ? (
+            <Alert className="fileAlert" theme="danger">
+              <center>
+                File Not Uploaded or It does not fulfill requirements
+                  </center>
+            </Alert>
+          ) : null
+        }
         <h2 className="Heading">Add New Swift</h2>
         <center>
           <Card className="Card1">
@@ -346,6 +383,7 @@ export default class NewZap extends React.Component {
             </CardBody>
           </Card>
         </center>
+        <TransactionModal content={this.state.modalContent} status={this.state.currentStatus} open={this.state.open} toggle={this.toggle}></TransactionModal>
       </div>
     );
   }

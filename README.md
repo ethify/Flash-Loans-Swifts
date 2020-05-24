@@ -32,6 +32,7 @@ https://imgur.com/a/C8EBuc9
 - SIA Skynet
 - Solidity
 - Truffle
+- 3Box
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

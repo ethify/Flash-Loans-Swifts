@@ -26,6 +26,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./NavBar.css";
 import { getAccount, getWeb3Instance, defaultAddress } from "./services";
 
+import { getShortAddress } from "./services/utils";
+
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -51,10 +53,7 @@ export default class NavBar extends React.Component {
     await getAccount();
     const userAddress = await defaultAddress();
 
-    const shortUserAddress =
-      userAddress.substring(0, 7) +
-      "........" +
-      userAddress.substring(userAddress.length - 7, userAddress.length);
+    const shortUserAddress = getShortAddress(userAddress);
     this.setState({
       userAddress: userAddress,
       shortUserAddress: shortUserAddress,
@@ -102,12 +101,17 @@ export default class NavBar extends React.Component {
                   Add New
                 </Link>
               </NavItem>
-              <NavItem className="NavItem1">
-                <Link className="Link" to="/profile">
-                  <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
-                  Dashboard
-                </Link>
-              </NavItem>
+              {this.state.userAddress ? (
+                <NavItem className="NavItem1">
+                  <Link
+                    className="Link"
+                    to={"/profile/" + this.state.userAddress}
+                  >
+                    <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
+                    Dashboard
+                  </Link>
+                </NavItem>
+              ) : null}
               <NavItem className="NavItem1">
                 <Link className="Link" to="/home">
                   <FontAwesomeIcon icon={faBolt} className="NavIcon" />
@@ -118,7 +122,13 @@ export default class NavBar extends React.Component {
 
             <Nav navbar className="ml-auto">
               <NavItem className="NavItem">
-                <Button outline pill theme="info" onClick={this.getWeb3}>
+                <Button
+                  outline
+                  pill
+                  theme="info"
+                  className="blockie-btn"
+                  onClick={this.getWeb3}
+                >
                   {this.state.userAddress ? (
                     <div className="address-container">
                       <img

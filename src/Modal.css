@@ -1,0 +1,9 @@
+.doneIcon {
+    color: green;
+    font-size: 100px;
+}
+
+.failedIcon {
+    color: red;
+    font-size: 100px;
+}

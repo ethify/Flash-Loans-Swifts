@@ -11,6 +11,8 @@ let box;
 let space = null;
 let web3;
 
+const rpcUrl = "https://ropsten.infura.io/v3/8b8d0c60bfab43bc8725df20fc660d15";
+
 const onboard = Onboard({
   dappId: "052b3fe9-87d5-4614-b2e9-6dd81115979a", // [String] The API key created by step one above
   networkId: 3, // [Integer] The Ethereum network ID your Dapp uses.
@@ -18,6 +20,46 @@ const onboard = Onboard({
     wallet: (wallet) => {
       web3 = new Web3(wallet.provider);
     },
+  },
+  darkMode: true,
+  walletSelect: {
+    wallets: [
+      { walletName: "metamask" },
+      {
+        walletName: "portis",
+        apiKey: "d7d72646-709a-45ab-aa43-8de5307ae0df",
+      },
+      {
+        walletName: "trezor",
+        appUrl: "https://reactdemo.blocknative.com",
+        email: "aaron@blocknative.com",
+        rpcUrl,
+      },
+      { walletName: "coinbase" },
+      {
+        walletName: "ledger",
+        rpcUrl,
+      },
+      {
+        walletName: "walletConnect",
+        infuraKey: "d5e29c9b9a9d4116a7348113f57770a8",
+        // rpc: {
+        //   [networkId]: rpcUrl,
+        // },
+      },
+      { walletName: "dapper" },
+      { walletName: "status" },
+      { walletName: "walletLink", rpcUrl },
+      { walletName: "fortmatic", apiKey: "pk_test_886ADCAB855632AA" },
+      { walletName: "unilogin" },
+      { walletName: "torus" },
+      { walletName: "squarelink", apiKey: "87288b677f8cfb09a986" },
+      { walletName: "authereum", disableNotifications: true },
+      { walletName: "trust", rpcUrl },
+      { walletName: "opera" },
+      { walletName: "operaTouch" },
+      { walletName: "imToken", rpcUrl },
+    ],
   },
 });
 
@@ -27,6 +69,9 @@ export const getAccount = async () => {
 };
 
 export const defaultAddress = async () => {
+  if (!web3) {
+    await getAccount();
+  }
   const currentState = onboard.getState();
   return currentState.address;
 };
@@ -35,7 +80,10 @@ export const getBalance = (address) => {
   return web3.eth.getBalance(address);
 };
 
-export const getWeb3Instance = () => {
+export const getWeb3Instance = async () => {
+  if (!web3) {
+    await getAccount();
+  }
   return web3;
 };
 
@@ -84,7 +132,7 @@ export const setSwifts = async (swiftData) => {
   console.log("swifts", swifts);
 
   swifts.push(swiftData);
-  space.public.set("swiftsLists", swifts);
+  await space.public.set("swiftsLists", swifts);
 
   const newSwifts = await getSwifts();
   console.log("now Swifts", newSwifts);
@@ -100,6 +148,7 @@ export const updateSwifts = async (newSwifts) => {
 };
 
 export const upVoteSwift = async (swiftID) => {
+  console.log(swiftID, "swiftID");
   let currentSwifts = await getSwifts();
 
   const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
@@ -137,6 +186,7 @@ export const upVoteSwift = async (swiftID) => {
 };
 
 export const downVoteSwift = async (swiftID) => {
+  console.log(swiftID, "swiftID");
   let currentSwifts = await getSwifts();
 
   const selectedSwiftIndex = currentSwifts.findIndex((filter) => {
@@ -207,8 +257,10 @@ export const uploadToSkynet = async (file) => {
   try {
     const { skylink } = await upload(url, file, { onUploadProgress });
     console.log("Skylink", skylink);
+    return skylink;
   } catch (error) {
     console.log("error", error);
+    return "error";
   }
 };
 
@@ -229,3 +281,57 @@ export const uploadToSkynet = async (file) => {
 //             })
 //     })
 // }
+
+export const getProfiles = async () => {
+  if (!space) {
+    await get3BoxInstance();
+    await getSpace();
+  }
+  const profiles = await space.public.get("profileList");
+  console.log("Got from profiles spcae", profiles);
+  return profiles;
+};
+
+export const getProfile = async (address) => {
+  let allProfiles = await getProfiles();
+  if (allProfiles == undefined) {
+    allProfiles = [];
+  }
+  console.log("All Profiles", allProfiles);
+  const profile = allProfiles.find((profile) => profile.address === address);
+  console.log("profile", profile);
+  return profile;
+};
+
+export const setProfiles = async (profileData) => {
+  let profiles = [];
+
+  profiles = await getProfiles();
+
+  if (profiles == undefined) {
+    profiles = [];
+  }
+
+  console.log("profiles", profiles);
+
+  profiles.push(profileData);
+  console.log("Now new profiles", profiles);
+  await space.public.set("profileList", profiles);
+
+  const newProfiles = await getProfiles();
+  console.log("now Profiles", newProfiles);
+};
+
+export const updateProfiles = async (newProfile) => {
+  const allProfiles = await getProfiles();
+  const profileIndex = allProfiles.findIndex(
+    (profile) => profile.address === newProfile.address
+  );
+  allProfiles[profileIndex] = newProfile;
+  space.public.set("profileList", allProfiles);
+
+  const newUpdatedProfiles = await getProfiles();
+  console.log("now Updated Swifts", newUpdatedProfiles);
+
+  return newUpdatedProfiles;
+};

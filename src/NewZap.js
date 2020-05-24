@@ -13,6 +13,7 @@ import {
   FormSelect,
   Button,
   FormTextarea,
+  Alert
 } from "shards-react";
 import {
   getSpace,
@@ -20,6 +21,11 @@ import {
   upVoteSwift,
   uploadToSkynet,
   compileCode,
+  getProfile,
+  defaultAddress,
+  setProfiles,
+  updateProfiles,
+  getProfiles
 } from "./services";
 import {
   faUser,
@@ -35,6 +41,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { v4 as uuidv4 } from "uuid";
+import TransactionModal from './Modal'
 
 export default class NewZap extends React.Component {
   constructor(props) {
@@ -51,11 +58,23 @@ export default class NewZap extends React.Component {
       contractFile: null,
       contractByteCode: null,
       contractABI: null,
+      rewardFeeAddress: '',
+      open: false,
+      currentStatus: null,
+      modalContent: '',
+      showAlert: false
     };
 
     this.addSwift = this.addSwift.bind(this);
     this.addParameter = this.addParameter.bind(this);
     this.handleFileChosen = this.handleFileChosen.bind(this);
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle = () => {
+    this.setState({
+      open: !this.state.open
+    });
   }
 
   addParameter = async () => {
@@ -108,12 +127,25 @@ export default class NewZap extends React.Component {
   };
 
   addSwift = async () => {
+    if (!this.state.contractFile) {
+      this.setState({ showAlert: true })
+      return
+    } else {
+      this.setState({ showAlert: false })
+    }
+    const userAddress = await defaultAddress()
+    this.toggle()
+    this.setState({ currentStatus: "inProgress", modalContent: "Adding Your Swift...Please Wait" })
     const space = await getSpace();
     const swiftUUID = uuidv4();
     let skylink;
 
     if (this.state.contractFile) {
       skylink = await uploadToSkynet(this.state.contractFile);
+      if (skylink === 'error') {
+        this.setState({ currentStatus: "failed", modalContent: "Adding Swift Failed! Please Try Again" })
+        return
+      }
     }
 
     const swift = {
@@ -127,14 +159,43 @@ export default class NewZap extends React.Component {
       contractSourceSkylink: skylink,
       contractABI: this.state.contractABI,
       contractByteCode: this.state.contractByteCode,
+      rewardFeeAddress: this.state.rewardFeeAddress
     };
 
+    let userProfile = await getProfile(userAddress)
+
+    if (!userProfile) {
+      const newUserProfile = {
+        address: userAddress,
+        totalUpVotes: 0,
+        totalDownVotes: 0,
+        totalSwiftsCreated: 1,
+        userDeployedSwifts: []
+      }
+
+      await setProfiles(newUserProfile)
+    } else {
+      userProfile.totalSwiftsCreated = userProfile.totalSwiftsCreated++
+      const updatedProfiles = await updateProfiles(userProfile)
+      console.log('Successfully Updated')
+    }
+
     await setSwifts(swift);
+    this.setState({ currentStatus: "done", modalContent: "Swift Successfully Added" })
   };
 
   render() {
     return (
-      <div>
+      <div className="main-container">
+        {
+          this.state.showAlert ? (
+            <Alert className="fileAlert" theme="danger">
+              <center>
+                File Not Uploaded or It does not fulfill requirements
+                  </center>
+            </Alert>
+          ) : null
+        }
         <h2 className="Heading">Add New Swift</h2>
         <center>
           <Card className="Card1">
@@ -155,9 +216,11 @@ export default class NewZap extends React.Component {
                 </FormGroup>
                 <FormGroup>
                   <label className="Lable" htmlFor="#address">
-                    Adddress
+                    Reward Fee Address
                   </label>
-                  <FormInput className="Address" placeholder="Address" />
+                  <FormInput className="Address" placeholder="Reward Fee Address" onChange={(e) =>
+                    this.setState({ rewardFeeAddress: e.target.value })
+                  } />
                 </FormGroup>
                 <FormGroup>
                   <label className="Lable" htmlFor="#description">
@@ -265,6 +328,7 @@ export default class NewZap extends React.Component {
                         <option value="Address">Address</option>
                         <option value="Int">Int</option>
                         <option value="String">String </option>
+                        <option value="AssetAmount">Amount of Asset</option>
                       </FormSelect>
                     </FormGroup>
                   </Col>
@@ -284,27 +348,25 @@ export default class NewZap extends React.Component {
                 {this.state.parameters.length < 0 ? (
                   <div>No parameters Added</div>
                 ) : (
-                  <div>
-                    {this.state.parameters.map((param) => (
-                      <div className="NewCard1">
-                        <Row>
-                          <Col>
-                            <h5 className="ParamHeading">
-                              Parameter Name -{" "}
-                              <span className="Span"> {param.paramName} </span>{" "}
-                            </h5>
-                          </Col>
-                          <Col>
-                            <h5>
-                              Parameter Type -{" "}
-                              <span className="Span">{param.paramType}</span>{" "}
-                            </h5>
-                          </Col>
-                        </Row>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                    <div>
+                      {this.state.parameters.map((param) => (
+                        <div className="NewCard1">
+                          <Row>
+                            <Col>
+                              <h5 className="ParamHeading">
+                                <span className="Span"> {param.paramName} </span>{" "}
+                              </h5>
+                            </Col>
+                            <Col>
+                              <h5>
+                                <span className="Span">{param.paramType}</span>{" "}
+                              </h5>
+                            </Col>
+                          </Row>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 <center>
                   <Button
                     className="AddS"
@@ -321,6 +383,7 @@ export default class NewZap extends React.Component {
             </CardBody>
           </Card>
         </center>
+        <TransactionModal content={this.state.modalContent} status={this.state.currentStatus} open={this.state.open} toggle={this.toggle}></TransactionModal>
       </div>
     );
   }

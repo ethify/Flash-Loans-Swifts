@@ -9,6 +9,7 @@ import NavBar from "./NavBar";
 import NewZap from "./NewZap";
 import FzapName from "./FzapName";
 import Profile from "./Profile";
+
 import {
   Route,
   Switch,
@@ -27,8 +28,8 @@ class App extends React.Component {
               <Route exact path="/" component={Landing} />
               <Route path="/home" component={Home} />
               <Route path="/new-zap" component={NewZap} />
-              <Route path="/profile" component={Profile} />
               <Route path="/swift/:swiftUUID" component={FzapName} />
+              <Route path="/profile/:userAddress" component={Profile} />
             </Switch>
           </HashRouter>
         </div>

@@ -11,6 +11,7 @@ import {
   CardBody,
   Card,
   CardHeader,
+  CardFooter,
   CardTitle,
   Form,
   FormInput,
@@ -91,8 +92,9 @@ export default class FZapName extends React.Component {
     var args = [];
     this.state.currentSwift.parameters.map(async (param) => {
 
-      if (param.paramType == + "AssetAmount") {
-        const amt = new BigNumber(this.state[param.paramName]) * new BigNumber(10 ** 18)
+      if (param.paramType === "AssetAmount") {
+        const amt = new BigNumber(new BigNumber(this.state[param.paramName]) * new BigNumber(10 ** 18))
+        console.log('amount', amt)
         args.push(amt);
       } else {
         args.push(this.state[param.paramName]);
@@ -113,11 +115,13 @@ export default class FZapName extends React.Component {
     const swiftID = this.props.match.params.swiftUUID;
     console.log(swiftID, "swiftID");
     const swift = await getSwift(swiftID);
-    const contractAddress = this.state.contract;
+    const contractAddress = this.props.location.state ? this.props.location.state.contractAddress : this.state.contract;
     const executeInstance = await executeOperation(contractAddress, swift.contractABI, args);
 
-    executeInstance.methods.flashloanWrapper(...args).send({
-      from: await defaultAddress(), gas: web3.utils.toHex(2220000),
+    executeInstance.methods.flashloanWrapper(...args).
+    send({
+      from: await defaultAddress(), 
+      gas: web3.utils.toHex(2220000),
       gasPrice: web3.utils.toHex(web3.utils.toWei('100', 'gwei'))
     }, (err, txh) => {
       console.log(txh, err)
@@ -197,11 +201,12 @@ export default class FZapName extends React.Component {
   }
 
   withdrawAsset = async () => {
+    console.log('this.state', this.state)
     const web3 = await getWeb3Instance()
     const swiftID = this.props.match.params.swiftUUID;
     console.log(swiftID, "swiftID");
     const swift = await getSwift(swiftID);
-    const contractAddress = this.state.contract;
+    const contractAddress = this.props.location.state ? this.props.location.state.contractAddress : this.state.contract;
     const withdrawInstance = await withdraw(
       contractAddress,
       swift.contractABI,
@@ -299,6 +304,9 @@ export default class FZapName extends React.Component {
                             </span>
                           </div>
                           <br />
+                          
+                        </CardBody>
+                        <CardFooter className="CardFooter">
                           <Button
                             outline
                             pill
@@ -309,7 +317,7 @@ export default class FZapName extends React.Component {
                           >
                             Use This &rarr;
                     </Button>
-                        </CardBody>
+                    </CardFooter>
                       </center>
                     </Card>
                   </Col>
@@ -371,7 +379,7 @@ export default class FZapName extends React.Component {
                     <Container>
                       {this.state.currentTab === "Summary" ? (
                         <div className="TabDiv">
-                          <h5>Description</h5>
+                          <h4>Description</h4>
                           <p>
                             {this.state.currentSwift.description}
                           </p>
@@ -394,10 +402,11 @@ export default class FZapName extends React.Component {
                             <CardBody>
                               {
                                 this.props.location.state ? (
-                                  <div>You Have Already Deployed The Contract. Use it Directly or Deploy Again</div>
+                                  <div>You Have Already Deployed The Contract. Use it Directly or Deploy Again
+                                    <br/>
+                                  </div>
                                 ) : null
                               }
-                              <br />
                               <h5>Deploy Contract</h5>
                               <center>
                                 <Button
@@ -522,10 +531,13 @@ export default class FZapName extends React.Component {
                             <CardBody>
                               <Form>
                                 <FormGroup>
-                                  <label htmlFor="#withdraw">Withdraw Asset</label>
+                                  <label htmlFor="#withdraw" >Withdraw Asset</label>
                                   <FormInput
                                     id="#username"
                                     placeholder="Asset Address"
+                                    onChange={(e) => {
+                                      this.setState({asset: e.target.value})
+                                    }}
                                   />
                                 </FormGroup>
                               </Form>

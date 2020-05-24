@@ -78,7 +78,7 @@ export default class Home extends React.Component {
           <Container className="main-container">
             <string>
               <center>
-                <h4>Flash Zaps</h4>
+                <h2 className="Heading">All Swifts</h2>
               </center>
             </string>{" "}
             <div className="Cards">

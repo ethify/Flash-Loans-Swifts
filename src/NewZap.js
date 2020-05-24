@@ -354,11 +354,13 @@ export default class NewZap extends React.Component {
                           <Row>
                             <Col>
                               <h5 className="ParamHeading">
+                              Parameter Name - 
                                 <span className="Span"> {param.paramName} </span>{" "}
                               </h5>
                             </Col>
                             <Col>
                               <h5>
+                                Parameter Type - 
                                 <span className="Span">{param.paramType}</span>{" "}
                               </h5>
                             </Col>

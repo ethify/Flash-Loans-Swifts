@@ -3,6 +3,8 @@
   margin-top: 2%;
   color: #212529;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 50px;
+  font-weight: bold;
 }
 .Cards {
   margin-top: 5%;
@@ -59,7 +61,7 @@
 }
 .UseButton {
   margin-top: 5%;
-  color: #222222;
+  color: #eeeeee;
   font-size: large;
   margin-bottom: 10px;
   border: 2px solid cyan;
@@ -81,8 +83,7 @@
 }
 
 .CardFooter {
-  /* background: #222222; */
-  background: white;
+  background: #222222;
   border-top: solid 4px cyan;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

@@ -1,9 +1,10 @@
 export const verifyFile = (content) => {
     let str = content.toString().split(' ').join('');
-    const searchStr1 = `constructor(address _addressProvider,address _zapper,address _fzap) FlashLoanReceiverBase(_addressProvider) public { 
+    const searchStr1 = `constructor(address _addressProvider,address _zapper,address _fzap`
+    const searchStr11= `) FlashLoanReceiverBase(_addressProvider) public { 
         zapper =_zapper;
         fzap = _fzap;
-    }`;
+    `;
     const searchstr2 = `function executeOperation(
         address _reserve,
         uint256 _amount,
@@ -29,7 +30,7 @@ export const verifyFile = (content) => {
     }`;
     const searchStr6 = `function flashloan(`;
     const searchStr7 =`private onlyOwner {`;
-    var stringLists = [searchStr1,searchstr2,searchStr3,searchStr4,searchStr5,searchStr6,searchStr7];
+    var stringLists = [searchStr1,searchStr11,searchstr2,searchStr3,searchStr4,searchStr5,searchStr6,searchStr7];
     var startIndex =0;
     var status= true;
     for(var i = 0; i<stringLists.length;i++){

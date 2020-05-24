@@ -1,5 +1,4 @@
 .LandingDiv {
-<<<<<<< HEAD
   width: 100%;
   height: 45rem;
   background-image: linear-gradient(#83a4d4, #b6fbff); 
@@ -13,19 +12,7 @@
   color: #222222;
   font-size: 75px;
   font-weight: bold;
-=======
-  width: 95rem;
-  height: 40rem;
-  background-image: linear-gradient(#7abaee, #ffffff);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-}
-.FlashHeading {
-  padding-top: 15%;
-  color: black;
-  font-size: xx-large;
-  font-weight: bolder;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
->>>>>>> 832c9979d8151aa3a28afb29921432979d5fc3dd
 }
 .FlashPara {
   padding-top: 1%;
@@ -37,14 +24,17 @@
 .LandingPill {
   margin-left: 2%;
   font-size: large;
-<<<<<<< HEAD
   border: 3px solid #222222;
   color: #222222;
   background: inherit;
-=======
   font-family: Verdana, Geneva, Tahoma, sans-serif;
->>>>>>> 832c9979d8151aa3a28afb29921432979d5fc3dd
 }
+
+.LandingPill:hover {
+  border-color: #222222;
+  background-color: #83a4d4;
+}
+
 .CarouselDiv {
   margin-top: 5%;
 
@@ -53,12 +43,8 @@
 }
 .CarouselCard {
   width: 85%;
-<<<<<<< HEAD
   margin-bottom: 4%;
-=======
-  margin-bottom: 10%;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
->>>>>>> 832c9979d8151aa3a28afb29921432979d5fc3dd
 }
 .WhatImg {
   width: auto;
@@ -101,6 +87,8 @@
   color: black;
   font-size: larger;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 0;
+  background: inherit;
 }
 .NextButton {
   float: right;
@@ -108,6 +96,8 @@
   color: black;
   font-size: larger;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 0;
+  background: inherit;
 }
 .Heading6 {
   padding-top: 4%;

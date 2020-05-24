@@ -31,7 +31,12 @@ import Withdraw3 from "./Withdraw3.png";
 import Withdraw4 from "./Withdraw4.png";
 import Withdraw5 from "./Withdraw5.png";
 
+import {get3BoxInstance} from './services'
+
 export default class Home extends React.Component {
+  async componentDidMount() {
+    await get3BoxInstance()
+  }
   render() {
     return (
       <div>

@@ -15,7 +15,7 @@ import {
   BrowserRouter as Router,
   HashRouter,
 } from "react-router-dom";
-
+import Landing from "./Landing";
 class App extends React.Component {
   render() {
     return (
@@ -24,7 +24,8 @@ class App extends React.Component {
           <NavBar />
           <HashRouter>
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/" component={Landing} />
+              <Route path="/home" component={Home} />
               <Route path="/new-zap" component={NewZap} />
               <Route path="/profile" component={Profile} />
               <Route path="/swift/:swiftUUID" component={FzapName} />

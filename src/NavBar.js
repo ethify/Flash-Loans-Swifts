@@ -20,6 +20,7 @@ import {
   faPlus,
   faUserCircle,
   faWallet,
+  faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./NavBar.css";
@@ -105,6 +106,12 @@ export default class NavBar extends React.Component {
                 <Link className="Link" to="/profile">
                   <FontAwesomeIcon icon={faUserCircle} className="NavIcon" />
                   Dashboard
+                </Link>
+              </NavItem>
+              <NavItem className="NavItem1">
+                <Link className="Link" to="/home">
+                  <FontAwesomeIcon icon={faBolt} className="NavIcon" />
+                  Flash Swifts
                 </Link>
               </NavItem>
             </Nav>

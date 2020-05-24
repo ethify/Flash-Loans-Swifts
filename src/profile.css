@@ -1,26 +1,39 @@
+.Heading {
+  text-align: center;
+  margin-top: 2%;
+  color: #212529;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 .Avatar {
   width: 60%;
   margin-top: 7%;
   height: 45%;
   margin-left: 3%;
   border-radius: 50%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .ProfileCard {
   width: 35%;
   height: 25rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .NameTitle {
   margin-top: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .AddressTitle {
   margin-top: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .LearnButton {
   margin-top: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Div1 {
   margin-top: 14%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UserSwifts {
   width: 35%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

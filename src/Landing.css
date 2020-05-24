@@ -2,90 +2,110 @@
   width: 95rem;
   height: 40rem;
   background-image: linear-gradient(#7abaee, #ffffff);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .FlashHeading {
   padding-top: 15%;
   color: black;
   font-size: xx-large;
   font-weight: bolder;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .FlashPara {
   padding-top: 1%;
   color: black;
   font-size: x-large;
   width: 70%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .LandingPill {
   margin-left: 2%;
   font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .CarouselDiv {
   margin-top: 9%;
 
   background-color: rgb(250, 252, 253);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .CarouselCard {
   width: 85%;
   margin-bottom: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .WhatImg {
   width: auto;
   height: 35rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DeveloperDiv {
   margin-top: 18%;
   background-color: rgb(236, 247, 246);
   height: 60rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UserDiv {
   margin-top: 15%;
   height: 50rem;
   background-color: rgb(242, 248, 255);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .BelowHeading {
   margin-top: 4%;
   padding-bottom: 5%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Heading5 {
   padding-top: 3%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .SliderButtons {
   padding-bottom: 5%;
   padding-top: 4%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .BackButton {
   float: left;
   margin-left: 4%;
   color: black;
   font-size: larger;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .NextButton {
   float: right;
   margin-right: 4%;
   color: black;
   font-size: larger;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Heading6 {
   padding-top: 4%;
   margin-bottom: 4%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .UserImage {
   width: auto;
   height: 40%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UserCard {
   width: 108%;
   height: 40%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DHeading {
   padding-top: 6%;
   padding-bottom: 9%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DRow {
   margin-top: 14%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DCol {
   margin-left: 36%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

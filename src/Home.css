@@ -1,48 +1,61 @@
 .Heading {
   text-align: center;
-  margin-bottom: 5%;
+  margin-top: 2%;
+  color: #212529;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Cards {
   margin-top: 5%;
   align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Card {
   width: 20rem;
   margin-bottom: 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .CardDescription {
   font-size: large;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Votes1 {
   display: inline-block;
   background-color: rgb(119, 221, 119);
   width: 10%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Votes2 {
   display: inline-block;
   background-color: rgb(247, 113, 113);
   width: 10%;
   margin-left: 7%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UpVote {
   color: rgb(2, 2, 59);
   display: inline-block;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UpVote:active {
   border-color: #00b8d8;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DownVote {
   color: rgb(2, 2, 59);
   display: inline-block;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UpNumber {
   margin-left: 3%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .DownNumber {
   margin-left: 3%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .main-container {
   margin-top: 5rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UseButton {
   margin-top: 5%;
@@ -50,21 +63,26 @@
   font-size: large;
   margin-bottom: 10px;
   border: 2px solid cyan;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .UseButton:hover {
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .Icon {
   color: black;
   background-color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .CardBody {
   height: 20rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .CardFooter {
   /* background: #222222; */
   background: white;
   border-top: solid 4px cyan;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

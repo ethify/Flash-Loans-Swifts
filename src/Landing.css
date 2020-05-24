@@ -1,44 +1,51 @@
 .LandingDiv {
-  width: 95rem;
-  height: 40rem;
-  background-image: linear-gradient(#7abaee, #ffffff);
+  width: 100%;
+  height: 45rem;
+  background-image: linear-gradient(#83a4d4, #b6fbff); 
+  /* background: #222222; */
+  /* #ffffff 
+#83a4d4,#b6bff 
+#b6fbff  */
 }
 .FlashHeading {
   padding-top: 15%;
-  color: black;
-  font-size: xx-large;
-  font-weight: bolder;
+  color: #222222;
+  font-size: 75px;
+  font-weight: bold;
 }
 .FlashPara {
   padding-top: 1%;
-  color: black;
+  color: #222222;
   font-size: x-large;
   width: 70%;
 }
 .LandingPill {
   margin-left: 2%;
   font-size: large;
+  border: 3px solid #222222;
+  color: #222222;
+  background: inherit;
 }
 .CarouselDiv {
-  margin-top: 9%;
+  margin-top: 5%;
 
   background-color: rgb(250, 252, 253);
 }
 .CarouselCard {
   width: 85%;
-  margin-bottom: 10%;
+  margin-bottom: 4%;
 }
 .WhatImg {
   width: auto;
   height: 35rem;
 }
 .DeveloperDiv {
-  margin-top: 18%;
+  margin-top: 4%;
   background-color: rgb(236, 247, 246);
   height: 60rem;
 }
 .UserDiv {
-  margin-top: 15%;
+  margin-top: 5%;
   height: 50rem;
   background-color: rgb(242, 248, 255);
 }
@@ -49,6 +56,9 @@
 }
 .Heading5 {
   padding-top: 3%;
+  font-size: 50px;
+  color: #222222;
+  font-weight: bold;
 }
 .SliderButtons {
   padding-bottom: 5%;
@@ -69,6 +79,8 @@
 .Heading6 {
   padding-top: 4%;
   margin-bottom: 4%;
+  font-weight: bold;
+  font-size: 50px;
 }
 
 .UserImage {
@@ -82,6 +94,8 @@
 .DHeading {
   padding-top: 6%;
   padding-bottom: 9%;
+  font-weight: bold;
+  font-size: 50px;
 }
 .DRow {
   margin-top: 14%;

@@ -107,12 +107,12 @@ export default class Profile extends React.Component {
               </center>
               <br />
               <br />
+              <h5>Your Swifts</h5>
               {
                 this.state.userProfile.userDeployedSwifts.length > 0 ? (
                   this.state.userProfile.userDeployedSwifts.map((swift) =>
                     <div>
                       <center>
-                        <h5>Your Swifts</h5>
                         <Card className="UserSwifts">
                           <CardBody>
                             <CardTitle>{swift.contractName}</CardTitle>

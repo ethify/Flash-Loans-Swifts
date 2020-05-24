@@ -43,18 +43,18 @@ export default class Home extends React.Component {
               A Dapp that connects developers who writes flashloan smart
               contracts and everyone else who would want to use them.
             </p>
-            <Button className="LandingPill" outline pill theme="secondary">
+            <Button  className="LandingPill" pill theme="light">
               What is Flash Zap?
             </Button>
-            <Button className="LandingPill" outline pill theme="secondary">
+            <Button className="LandingPill" pill theme="light">
               Learn As User
             </Button>
-            <Button className="LandingPill" outline pill theme="secondary">
+            <Button className="LandingPill" pill theme="light">
               Learn As Developer
             </Button>
           </center>
         </div>
-        <div className="CarouselDiv">
+        <div id="aboutus" className="CarouselDiv">
           <center>
             {" "}
             <h2 className="Heading5">What We Provide Here</h2>
@@ -89,7 +89,7 @@ export default class Home extends React.Component {
           </center>
         </div>
 
-        <div className="UserDiv">
+        <div id="forusers" className="UserDiv">
           <center>
             {" "}
             <h2 className="Heading6">For users</h2>
@@ -160,7 +160,7 @@ export default class Home extends React.Component {
           </div>
         </div>
 
-        <div className="DeveloperDiv">
+        <div id="fordevelopers" className="DeveloperDiv">
           <center>
             {" "}
             <h3 className="DHeading">For Developers</h3>

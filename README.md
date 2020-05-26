@@ -1,3 +1,39 @@
+# Flash Loans Swifts
+
+This is a Dapp the connects All the Defi Developers that know how to leverage Flash Loans for various purposes and People that want to use Flash Loan based contracts for their own but are not familier with the constructs of writing Smart Contract and Solidity programming. 
+
+## Features
+
+- Add Flash Contracts known as Swifts
+- Deploy and Execute Swifts
+- Rate different Swifts based on performance and functionality
+- Dashboard for Deployed Swift management
+
+## Working Mechanism for Dapp
+
+Anyone who has written a smart contract for flashloan can submit their smart contract with some of our guidlines, and any user can use them in three simple clicks, without having to worry about how it all is working.
+1. We are giving 0.045% fee to the developer of smart contract of the total amount transacted with his contract.
+2. We are providing with complete interface for users to deploy their Aave flashloan contract and execute the flashloan and then withdraw assets.
+3. We have some guidlines that needs to be followed for submitting the contract, thus to ensure right contract is on our platform.
+4. Our platform also has a reputation system, thus more reputed developer's contract will can be identified with ease.
+
+## Screenshots
+
+https://imgur.com/a/C8EBuc9
+
+## Video Demo
+
+
+## Tech Stack Used
+
+- React
+- Web3
+- Portis
+- SIA Skynet
+- Solidity
+- Truffle
+- 3Box
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

@@ -1,6 +1,6 @@
 import React from "react";
 import "./NewZap.css";
-import { verifyFileUniSwap } from "./services/FileServices";
+import { verifyFile,verifyFileUniSwap } from "./services/FileServices";
 import {
   Form,
   FormInput,
@@ -102,7 +102,9 @@ export default class NewZap extends React.Component {
       fileReader.readAsText(contractFile);
       fileReader.onloadend = (e) => {
         const content = fileReader.result;
-        var resp = verifyFileUniSwap(content.toString());
+        var resp = verifyFile(content.toString());
+     //    var resp = verifyFileUniSwap(content.toString());
+
         const isCorrect = true;
         console.log("isCorrect", isCorrect);
         if (isCorrect) {

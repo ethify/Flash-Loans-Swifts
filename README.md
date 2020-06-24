@@ -36,6 +36,12 @@ https://imgur.com/a/C8EBuc9
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Contributors
+
+- [Abhimanyu Shekhawat](https://github.com/Abhimanyu121/)
+- [Kanika Agrawal](https://github.com/Man-Jain/)
+- [Manank Patni](https://github.com/Kanika1799/)
+
 ## Available Scripts
 
 In the project directory, you can run:

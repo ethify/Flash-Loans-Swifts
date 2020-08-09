@@ -1,10 +1,10 @@
 # Flash Loans Swifts
 
-This is a Dapp the connects All the Defi Developers that know how to leverage Flash Loans for various purposes and People that want to use Flash Loan based contracts for their own but are not familier with the constructs of writing Smart Contract and Solidity programming. 
+This is a Dapp the connects All the **Defi Developers** that know how to leverage Flash Loans for various purposes and **People** that want to use Flash Loan based contracts for their own but are not familier with the constructs of writing Smart Contract and Solidity programming. 
 
 ## Features
 
-- Add Flash Contracts known as Swifts
+- Add Flash Contracts known as **Swifts**
 - Deploy and Execute Swifts
 - Rate different Swifts based on performance and functionality
 - Dashboard for Deployed Swift management
